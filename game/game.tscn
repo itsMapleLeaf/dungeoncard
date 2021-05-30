@@ -21,17 +21,43 @@ __meta__ = {
 }
 
 [node name="card_move_up" parent="deck" instance=ExtResource( 1 )]
+card_id = ""
 
 [node name="card_move_up2" parent="deck" instance=ExtResource( 1 )]
+margin_left = 54.0
+margin_right = 104.0
+card_id = ""
 
 [node name="card_move_down" parent="deck" instance=ExtResource( 2 )]
+margin_left = 108.0
+margin_right = 158.0
+card_id = ""
 
 [node name="card_move_down2" parent="deck" instance=ExtResource( 2 )]
+margin_left = 162.0
+margin_right = 212.0
+card_id = ""
 
 [node name="card_move_left" parent="deck" instance=ExtResource( 4 )]
+margin_left = 216.0
+margin_right = 266.0
+card_id = ""
 
 [node name="card_move_left2" parent="deck" instance=ExtResource( 4 )]
+margin_left = 270.0
+margin_right = 320.0
+card_id = ""
 
 [node name="card_move_right" parent="deck" instance=ExtResource( 5 )]
+margin_left = 0.0
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 104.0
+card_id = ""
 
 [node name="card_move_right2" parent="deck" instance=ExtResource( 5 )]
+margin_left = 54.0
+margin_top = 54.0
+margin_right = 104.0
+margin_bottom = 104.0
+card_id = ""

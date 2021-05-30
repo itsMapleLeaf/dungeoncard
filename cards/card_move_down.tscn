@@ -9,8 +9,7 @@ atlas = ExtResource( 2 )
 region = Rect2( 0, 64, 32, 32 )
 
 [node name="card_move_down" type="TextureButton"]
-margin_left = 54.0
-margin_right = 104.0
+margin_right = 50.0
 margin_bottom = 50.0
 rect_pivot_offset = Vector2( 156.33, -126.992 )
 texture_normal = ExtResource( 1 )

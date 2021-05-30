@@ -1,0 +1,13 @@
+- [x] show a row of cards at the bottom of the screen (the hand)
+- [x] create movement cards: up, down, left, right
+- [x] show a random set of three cards
+- [x] on card click, move it back to deck
+- [x] on card click, draw a new card
+- [ ] simple tile map, grid of dungeon tiles
+- [ ] show an adventurer on one tile
+- [ ] camera
+- [ ] clicking a card should move the adventurer in the corresponding direction on the grid
+- [x] sort cards in a user-friendly order
+- [x] animate cards with linear interpolation
+- [x] new cards should pop in from the bottom like toast
+- [ ] allow multiple types of cards in one deck

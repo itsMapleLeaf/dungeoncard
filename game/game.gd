@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 	cards.sort_custom(HandSorter, "sort")
 	
 	var hand_width := cards.size() * (card_width + card_spacing) - card_spacing
-	var hand_center := hand_width / 2
+	var hand_center := float(hand_width) / 2
 	
 	for index in range(hand.get_child_count()):
 		var card: TextureButton = cards[index]
@@ -49,7 +49,7 @@ func draw_card() -> void:
 	cards.sort_custom(HandSorter, "sort")
 	
 	var hand_width := cards.size() * (card_width + card_spacing) - card_spacing
-	var hand_center := hand_width / 2
+	var hand_center := float(hand_width) / 2
 	
 	var index := cards.find(card)
 	var x := index * (card_width + card_spacing) - hand_center

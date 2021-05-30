@@ -60,11 +60,11 @@ func draw_card() -> void:
 
 
 class HandSorter:
-	static func sort(a: Node, b: Node) -> bool:
+	static func sort(a: Card, b: Card) -> bool:
 		var order := [
-			'card_move_left',
-			'card_move_down',
-			'card_move_up',
-			'card_move_right',
+			'move_left',
+			'move_down',
+			'move_up',
+			'move_right',
 		]
-		return order.find(a.name) < order.find(b.name)
+		return order.find(a.card_id) < order.find(b.card_id)

@@ -10,4 +10,4 @@
 - [x] sort cards in a user-friendly order
 - [x] animate cards with linear interpolation
 - [x] new cards should pop in from the bottom like toast
-- [ ] allow multiple types of cards in one deck
+- [x] allow multiple types of cards in one deck

@@ -3,10 +3,11 @@
 - [x] show a random set of three cards
 - [x] on card click, move it back to deck
 - [x] on card click, draw a new card
-- [ ] simple tile map, grid of dungeon tiles
+- [x] simple tile map, grid of dungeon tiles
 - [ ] show an adventurer on one tile
 - [ ] camera
 - [ ] clicking a card should move the adventurer in the corresponding direction on the grid
+- [ ] animate movement
 - [x] sort cards in a user-friendly order
 - [x] animate cards with linear interpolation
 - [x] new cards should pop in from the bottom like toast

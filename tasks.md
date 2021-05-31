@@ -7,10 +7,13 @@
 - [x] show an adventurer on one tile
 - [x] camera
 - [x] clicking a card should move the adventurer in the corresponding direction on the grid
-- [ ] animate movement
 - [x] sort cards in a user-friendly order
 - [x] animate cards with linear interpolation
 - [x] new cards should pop in from the bottom like toast
 - [x] allow multiple types of cards in one deck
-- [ ] manage facing direction of player
 - [x] idea: cards to move multiple spaces (x1, x3)
+- [ ] animate movement
+- [ ] manage facing direction of player (?)
+- [ ] show an enemy sprite on map
+- [ ] add attack card
+- [ ] using attack card should attack the enemy (in the player's direction? in all directions? in a card-specific direction?)

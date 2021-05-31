@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://git_api.gdns"
+}, {
+"base": "Node",
+"class": "MovementIntent",
+"language": "GDScript",
+"path": "res://cards/movement_intent.gd"
 } ]
 _global_script_class_icons={
 "Card": "",
-"GitAPI": ""
+"GitAPI": "",
+"MovementIntent": ""
 }
 
 [application]

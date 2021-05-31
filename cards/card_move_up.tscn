@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/card.png" type="Texture" id=1]
 [ext_resource path="res://assets/icons.png" type="Texture" id=2]
 [ext_resource path="res://cards/card.gd" type="Script" id=3]
+[ext_resource path="res://cards/movement_intent.gd" type="Script" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -33,3 +34,12 @@ texture = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="intents" type="Node" parent="."]
+
+[node name="MovementIntent" type="Node" parent="intents"]
+script = ExtResource( 4 )
+
+[node name="Card" type="Node" parent="."]
+script = ExtResource( 3 )
+card_id = "move_up"

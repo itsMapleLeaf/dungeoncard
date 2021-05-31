@@ -1,12 +1,13 @@
 extends Node
 
-const card_width = 50
-const card_height = card_width
-const card_spacing = 4
-const card_animation_snappiness = 10
+const card_width := 50
+const card_height := card_width
+const card_spacing := 4
+const card_animation_snappiness := 10
 
 onready var deck := $ui/deck
 onready var hand := $ui/hand
+onready var player := $player
 
 func _ready() -> void:
 	for card in deck.get_children():
@@ -31,6 +32,11 @@ func _process(delta: float) -> void:
 
 
 func play_card(card: TextureButton) -> void:
+	var intents := card.find_node("intents").get_children()
+	for intent in intents:
+		if intent is MovementIntent:
+			player.move(intent.get_direction_vector())
+	
 	# need to make sure the card is out of the hand before draw_card()
 	# so that the positioning stuff in draw_card has the correct card count
 	hand.remove_child(card)
@@ -58,11 +64,16 @@ func draw_card() -> void:
 
 
 class HandSorter:
-	static func sort(a: Card, b: Card) -> bool:
+	static func sort(a: Node, b: Node) -> bool:
 		var order := [
 			'move_left',
 			'move_down',
 			'move_up',
 			'move_right',
 		]
-		return order.find(a.card_id) < order.find(b.card_id)
+		return order.find(get_card_id(a)) < order.find(get_card_id(b))
+
+	static func get_card_id(card: Node) -> String:
+		var child := card.find_node("Card")
+		if child is Card: return child.card_id
+		return ""

@@ -38,7 +38,6 @@ __meta__ = {
 
 [node name="idle_animation" type="AnimatedSprite" parent="player"]
 position = Vector2( -0.5, 0 )
-scale = Vector2( 0.98, 1 )
 frames = SubResource( 1 )
 animation = "idle"
 frame = 3
@@ -97,14 +96,12 @@ card_id = ""
 [node name="card_move_right" parent="ui/deck" instance=ExtResource( 5 )]
 margin_top = 54.0
 margin_bottom = 104.0
-card_id = ""
 
 [node name="card_move_right2" parent="ui/deck" instance=ExtResource( 5 )]
 margin_left = 54.0
 margin_top = 54.0
 margin_right = 104.0
 margin_bottom = 104.0
-card_id = ""
 
 [node name="hand" type="Control" parent="ui"]
 anchor_left = 0.5

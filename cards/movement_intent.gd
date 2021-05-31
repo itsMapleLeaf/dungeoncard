@@ -9,6 +9,7 @@ enum MovementIntentDirection {
 }
 
 export(MovementIntentDirection) var direction
+export var spaces := 1
 
 func get_direction_vector() -> Vector2:
 	match direction:

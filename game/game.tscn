@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://cards/card_move_up.tscn" type="PackedScene" id=1]
 [ext_resource path="res://cards/card_move_down.tscn" type="PackedScene" id=2]
@@ -11,6 +11,11 @@
 [ext_resource path="res://assets/adventurer-idle-2-00.png" type="Texture" id=9]
 [ext_resource path="res://assets/adventurer-idle-2-01.png" type="Texture" id=10]
 [ext_resource path="res://game/player.gd" type="Script" id=11]
+[ext_resource path="res://cards/card_move_up_x3.tscn" type="PackedScene" id=12]
+[ext_resource path="res://cards/card_move_left_x3.tscn" type="PackedScene" id=13]
+[ext_resource path="res://cards/card_move_right_x3.tscn" type="PackedScene" id=14]
+[ext_resource path="res://cards/card_move_down_x3.tscn" type="PackedScene" id=15]
+[ext_resource path="res://cards/do_nothing.tscn" type="PackedScene" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -40,7 +45,7 @@ __meta__ = {
 position = Vector2( -0.5, 0 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 offset = Vector2( 0, -18 )
 
@@ -65,12 +70,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="card_move_up" parent="ui/deck" instance=ExtResource( 1 )]
-card_id = ""
+[node name="do_nothing" parent="ui/deck" instance=ExtResource( 16 )]
 
-[node name="card_move_up2" parent="ui/deck" instance=ExtResource( 1 )]
-margin_left = 54.0
-margin_right = 104.0
+[node name="do_nothing2" parent="ui/deck" instance=ExtResource( 16 )]
+
+[node name="card_move_up" parent="ui/deck" instance=ExtResource( 1 )]
 card_id = ""
 
 [node name="card_move_down" parent="ui/deck" instance=ExtResource( 2 )]
@@ -78,30 +82,36 @@ margin_left = 108.0
 margin_right = 158.0
 card_id = ""
 
-[node name="card_move_down2" parent="ui/deck" instance=ExtResource( 2 )]
-margin_left = 162.0
-margin_right = 212.0
-card_id = ""
-
 [node name="card_move_left" parent="ui/deck" instance=ExtResource( 4 )]
 margin_left = 216.0
 margin_right = 266.0
-card_id = ""
-
-[node name="card_move_left2" parent="ui/deck" instance=ExtResource( 4 )]
-margin_left = 270.0
-margin_right = 320.0
 card_id = ""
 
 [node name="card_move_right" parent="ui/deck" instance=ExtResource( 5 )]
 margin_top = 54.0
 margin_bottom = 104.0
 
-[node name="card_move_right2" parent="ui/deck" instance=ExtResource( 5 )]
-margin_left = 54.0
+[node name="card_move_down3" parent="ui/deck" instance=ExtResource( 15 )]
+margin_left = 108.0
 margin_top = 54.0
-margin_right = 104.0
+margin_right = 158.0
 margin_bottom = 104.0
+
+[node name="card_move_left3" parent="ui/deck" instance=ExtResource( 13 )]
+margin_left = 216.0
+margin_top = 54.0
+margin_right = 266.0
+margin_bottom = 104.0
+
+[node name="card_move_right3" parent="ui/deck" instance=ExtResource( 14 )]
+margin_top = 108.0
+margin_bottom = 158.0
+
+[node name="card_move_up3" parent="ui/deck" instance=ExtResource( 12 )]
+margin_left = 108.0
+margin_top = 108.0
+margin_right = 158.0
+margin_bottom = 158.0
 
 [node name="hand" type="Control" parent="ui"]
 anchor_left = 0.5

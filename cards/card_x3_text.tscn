@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="card_x3_text" type="RichTextLabel"]
+margin_left = 25.0
+margin_top = 29.0
+margin_right = 41.0
+margin_bottom = 45.0
+mouse_filter = 2
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "x3"
+__meta__ = {
+"_edit_use_anchors_": false
+}

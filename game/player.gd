@@ -1,4 +1,4 @@
 extends Node2D
 
-func move(direction: Vector2) -> void:
-	position += direction.normalized() * 16
+func move(direction: Vector2, spaces: int) -> void:
+	position += direction.normalized() * 16 * spaces

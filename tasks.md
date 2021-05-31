@@ -13,4 +13,4 @@
 - [x] new cards should pop in from the bottom like toast
 - [x] allow multiple types of cards in one deck
 - [ ] manage facing direction of player
-- [ ] idea: cards to move multiple spaces (x1, x3)
+- [x] idea: cards to move multiple spaces (x1, x3)

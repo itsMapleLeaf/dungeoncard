@@ -16,4 +16,4 @@
 - [ ] manage facing direction of player (?)
 - [ ] show an enemy sprite on map
 - [ ] add attack card
-- [ ] using attack card should attack the enemy (in the player's direction? in all directions? in a card-specific direction?)
+- [ ] using attack card should attack an enemy in the adjacent tile (no matter which one, ideally choose one at random if multiple)

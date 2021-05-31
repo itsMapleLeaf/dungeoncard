@@ -4,7 +4,7 @@
 - [x] on card click, move it back to deck
 - [x] on card click, draw a new card
 - [x] simple tile map, grid of dungeon tiles
-- [ ] show an adventurer on one tile
+- [x] show an adventurer on one tile
 - [ ] camera
 - [ ] clicking a card should move the adventurer in the corresponding direction on the grid
 - [ ] animate movement

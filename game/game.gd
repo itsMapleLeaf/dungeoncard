@@ -5,12 +5,10 @@ const card_height = card_width
 const card_spacing = 4
 const card_animation_snappiness = 10
 
-onready var deck := $deck
-onready var hand := $hand
+onready var deck := $ui/deck
+onready var hand := $ui/hand
 
 func _ready() -> void:
-	hand.global_position = get_viewport().size * Vector2(0.5, 1)
-	
 	for card in deck.get_children():
 		card.connect("pressed", self, "play_card", [card])
 	

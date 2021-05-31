@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "MovementIntent",
 "language": "GDScript",
-"path": "res://cards/movement_intent.gd"
+"path": "res://intents/movement_intent.gd"
 } ]
 _global_script_class_icons={
 "Card": "",

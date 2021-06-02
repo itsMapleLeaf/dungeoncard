@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/adventurer-idle-2-02.png-80aa7efd76971d4f52acf6a2eb841749.stex"
+path="res://.import/goblin_idle_spritesheet.png-8bd95b00d0b60b3bc2a637821eb5c018.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/adventurer-idle-2-02.png"
-dest_files=[ "res://.import/adventurer-idle-2-02.png-80aa7efd76971d4f52acf6a2eb841749.stex" ]
+source_file="res://game/assets/goblin_idle_spritesheet.png"
+dest_files=[ "res://.import/goblin_idle_spritesheet.png-8bd95b00d0b60b3bc2a637821eb5c018.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fly_anim_spritesheet.png-d25ae4c6058c43a46ecc26c699ac9289.stex"
+path="res://.import/knight_idle_spritesheet.png-ce81e62152d5bd5af790f0421b76d2bc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/fly_anim_spritesheet.png"
-dest_files=[ "res://.import/fly_anim_spritesheet.png-d25ae4c6058c43a46ecc26c699ac9289.stex" ]
+source_file="res://game/assets/knight_idle_spritesheet.png"
+dest_files=[ "res://.import/knight_idle_spritesheet.png-ce81e62152d5bd5af790f0421b76d2bc.stex" ]
 
 [params]
 

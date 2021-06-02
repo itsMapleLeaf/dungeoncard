@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/adventurer-idle-2-01.png-209b4e50576c17fee3f470c388b35d36.stex"
+path="res://.import/tilemap.png-f3aebe997e1c4564106051feee5a0ab6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/adventurer-idle-2-01.png"
-dest_files=[ "res://.import/adventurer-idle-2-01.png-209b4e50576c17fee3f470c388b35d36.stex" ]
+source_file="res://game/assets/tilemap.png"
+dest_files=[ "res://.import/tilemap.png-f3aebe997e1c4564106051feee5a0ab6.stex" ]
 
 [params]
 

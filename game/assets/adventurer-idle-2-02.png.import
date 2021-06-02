@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/knight_idle_spritesheet.png-f21c49f76ca65490f4c184e2416810b9.stex"
+path="res://.import/adventurer-idle-2-02.png-b9ff75c80fe2aad915e116c01ef658ea.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/knight_idle_spritesheet.png"
-dest_files=[ "res://.import/knight_idle_spritesheet.png-f21c49f76ca65490f4c184e2416810b9.stex" ]
+source_file="res://game/assets/adventurer-idle-2-02.png"
+dest_files=[ "res://.import/adventurer-idle-2-02.png-b9ff75c80fe2aad915e116c01ef658ea.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/slime_idle_spritesheet.png-8e1509d0e380918f7b58b446ce74e83c.stex"
+path="res://.import/card.png-30f156252bc6b6c03c72dd94bfb4c108.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/slime_idle_spritesheet.png"
-dest_files=[ "res://.import/slime_idle_spritesheet.png-8e1509d0e380918f7b58b446ce74e83c.stex" ]
+source_file="res://game/assets/card.png"
+dest_files=[ "res://.import/card.png-30f156252bc6b6c03c72dd94bfb4c108.stex" ]
 
 [params]
 

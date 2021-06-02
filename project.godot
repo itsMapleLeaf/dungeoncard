@@ -10,9 +10,19 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "AttackIntent",
+"language": "GDScript",
+"path": "res://game/intents/attack_intent.gd"
+}, {
+"base": "Node",
 "class": "Card",
 "language": "GDScript",
-"path": "res://cards/card.gd"
+"path": "res://game/cards/card.gd"
+}, {
+"base": "Node2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://game/enemy.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -22,10 +32,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "MovementIntent",
 "language": "GDScript",
-"path": "res://intents/movement_intent.gd"
+"path": "res://game/intents/movement_intent.gd"
 } ]
 _global_script_class_icons={
+"AttackIntent": "",
 "Card": "",
+"Enemy": "",
 "GitAPI": "",
 "MovementIntent": ""
 }

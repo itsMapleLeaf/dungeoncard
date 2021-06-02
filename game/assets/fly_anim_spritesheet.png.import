@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/goblin_idle_spritesheet.png-9a2e95cb321cdced34ba7cb3d57900f9.stex"
+path="res://.import/fly_anim_spritesheet.png-474413b287c882dabe3c47e5ec61a795.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/goblin_idle_spritesheet.png"
-dest_files=[ "res://.import/goblin_idle_spritesheet.png-9a2e95cb321cdced34ba7cb3d57900f9.stex" ]
+source_file="res://game/assets/fly_anim_spritesheet.png"
+dest_files=[ "res://.import/fly_anim_spritesheet.png-474413b287c882dabe3c47e5ec61a795.stex" ]
 
 [params]
 

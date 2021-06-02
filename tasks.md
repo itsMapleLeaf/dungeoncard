@@ -12,8 +12,12 @@
 - [x] new cards should pop in from the bottom like toast
 - [x] allow multiple types of cards in one deck
 - [x] idea: cards to move multiple spaces (x1, x3)
+- [x] show an enemy sprite on map
+- [x] add attack card
+- [x] when using attack card, damage an adjacent enemy
+- [ ] visible enemy health
 - [ ] animate movement
+- [ ] animate attacking
 - [ ] manage facing direction of player (?)
-- [ ] show an enemy sprite on map
-- [ ] add attack card
-- [ ] using attack card should attack an enemy in the adjacent tile (no matter which one, ideally choose one at random if multiple)
+- [ ] attacking should make the player face the direction of the enemy they damaged
+- [ ] limit the movement bounds of the player

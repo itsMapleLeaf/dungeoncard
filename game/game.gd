@@ -5,10 +5,12 @@ const card_height := card_width
 const card_spacing := 4
 const card_animation_snappiness := 10
 const hand_size = 5
+const required_attack_distance = 32
 
 onready var deck := $ui/deck
 onready var hand := $ui/hand
 onready var player := $player
+
 
 func _ready() -> void:
 	for card in deck.get_children():
@@ -34,9 +36,7 @@ func _process(delta: float) -> void:
 
 func play_card(card: TextureButton) -> void:
 	var intents := card.find_node("intents").get_children()
-	for intent in intents:
-		if intent is MovementIntent:
-			player.move(intent.get_direction_vector(), intent.spaces)
+	for intent in intents: handle_intent(intent)
 	
 	# need to make sure the card is out of the hand before draw_card()
 	# so that the positioning stuff in draw_card has the correct card count
@@ -63,6 +63,41 @@ func draw_card() -> void:
 	# make the card start out of screen and animate in
 	card.rect_position = Vector2(x, y) + Vector2(0, card_height)
 
+func handle_intent(intent: Object) -> void:
+	if intent is MovementIntent:
+		player.move(intent.get_direction_vector(), intent.spaces)
+
+	if intent is AttackIntent:
+		var enemies := get_enemies()
+		var closest: Enemy = get_closest(enemies, player)
+		if closest and distance_between(player, closest) <= required_attack_distance:
+			closest.damage()
+
+func get_enemies() -> Array:
+	var enemies := []
+	for child in get_children():
+		if child is Enemy:
+			enemies.append(child)
+	return enemies
+	
+func get_closest(nodes: Array, pivot: Node2D) -> Node2D:
+	if nodes.empty(): return null
+
+	var closest: Node2D = nodes.front()
+	var closest_dist := distance_between(closest, pivot)
+	for node in nodes.slice(1, nodes.size()):
+		if not (node is Node2D):
+			continue
+		
+		var distance = distance_between(node, pivot)
+		if distance < closest_dist:
+			closest = node
+			closest_dist = distance
+			
+	return closest
+
+func distance_between(a: Node2D, b: Node2D) -> float:
+	return (a.global_position - b.global_position).length()
 
 class HandSorter:
 	static func sort(a: Node, b: Node) -> bool:

@@ -75,7 +75,7 @@ func draw_card() -> void:
 
 func handle_intent(intent: Object) -> void:
 	if intent is MovementIntent:
-		player.move(intent.get_direction_vector(), intent.spaces)
+		player.move(intent.get_direction_vector())
 
 	if intent is AttackIntent:
 		var enemies := get_enemies()

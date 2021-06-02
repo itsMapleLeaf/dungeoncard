@@ -15,6 +15,11 @@
 - [x] idea: cards to move multiple spaces (x1, x3)
 - [ ] manage facing direction of player (?)
 
+# movement
+
+- [x] player and enemy movement off grid with collision resolution
+- [ ] hold movement card to move further?
+
 # combat
 
 - [x] show an enemy sprite on map
@@ -26,6 +31,7 @@
 - [x] if player tries to move into enemy, player takes damage
 - [x] player health bar
 - [ ] attacking should make the player face the direction of the enemy they damaged (???)
+- [ ] player should bounce back when damaged
 
 # enemies
 
@@ -48,8 +54,9 @@
 - [x] animate cards with linear interpolation
 - [ ] animate movement
 - [ ] animate attacking
-- [ ] animate damage (flash red)
+- [ ] animate damage (flash red and/or blink)
 - [ ] better ground sprites for clearer tile boundaries
+- [ ] preview to show how far the movement goes?
 
 # other things
 

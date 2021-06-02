@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 class_name Enemy
 
 signal damaged_target
@@ -9,6 +9,9 @@ var target: Node2D
 
 onready var health_bar := $HealthBar as ColorRect
 
+var controller = PhysicsController.new()
+const speed := 200.0
+
 func _ready():
 	health_bar.rect_pivot_offset = health_bar.rect_size / 2
 	
@@ -17,6 +20,15 @@ func _ready():
 	movement_timer.autostart = true
 	movement_timer.connect("timeout", self, "move_towards_target")
 	add_child(movement_timer)
+	
+func _physics_process(delta: float) -> void:
+	controller.update(delta, self)
+	
+	for i in get_slide_count():
+		var collision := get_slide_collision(i)
+		var node: Node2D = collision.collider
+		if node.is_in_group("player"):
+			emit_signal("damaged_target")
 
 func damage() -> void:
 	health -= 1
@@ -36,18 +48,8 @@ func move_towards_target() -> void:
 	if !target: return
 	
 	# AStar would be more correct for this but later aaaaa
-	var direction := to_nearest_cardinal(target.global_position - global_position)
-	var new_position := global_position + direction * 16
-	var results := get_world_2d().direct_space_state.intersect_point(new_position)
-	
-	if results.empty():
-		global_position = new_position
-		return
-
-	for result in results:
-		var node: Node2D = result.collider
-		if node.is_in_group("player"):
-			emit_signal("damaged_target")
+	var direction := global_position.direction_to(target.global_position)
+	controller.velocity = direction * speed
 
 func to_nearest_cardinal(vec: Vector2) -> Vector2:
 	if abs(vec.x) > abs(vec.y):

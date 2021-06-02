@@ -15,7 +15,7 @@
 - [x] show an enemy sprite on map
 - [x] add attack card
 - [x] when using attack card, damage an adjacent enemy
-- [ ] visible enemy health
+- [x] visible enemy health
 - [ ] animate movement
 - [ ] animate attacking
 - [ ] manage facing direction of player (?)

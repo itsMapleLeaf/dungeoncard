@@ -21,9 +21,13 @@ func _ready() -> void:
 	for _i in range(5):
 		draw_card()
 		
-	for enemy in get_enemies():
-		(enemy as Enemy).set_target(player)
+	for i in get_enemies():
+		var enemy := i as Enemy
+		enemy.set_target(player)
+		enemy.connect("damaged_target", self, "damage_player")
 
+func damage_player():
+	player.damage()
 
 func _process(delta: float) -> void:
 	var cards := hand.get_children()

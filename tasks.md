@@ -22,10 +22,14 @@
 - [x] when using attack card, damage an adjacent enemy
 - [x] visible enemy health
 - [x] enemy should move towards player every second(?)
-- [ ] if enemy wants to move but player is occupying the space, player takes damage
+- [x] if enemy wants to move but player is occupying the space, player takes damage
 - [ ] if player tries to move into enemy, player takes damage
-- [ ] player health bar
+- [x] player health bar
 - [ ] attacking should make the player face the direction of the enemy they damaged
+
+# enemies
+
+- [ ] show a little dial on enemies that winds down until their next move
 
 # consumables / items / drops
 

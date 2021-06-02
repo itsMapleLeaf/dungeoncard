@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://game/cards/move_up.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/cards/move_down.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://game/player.gd" type="Script" id=11]
 [ext_resource path="res://game/deck.gd" type="Script" id=12]
 [ext_resource path="res://game/cards/attack.tscn" type="PackedScene" id=13]
+[ext_resource path="res://game/physics_controller.gd" type="Script" id=14]
 [ext_resource path="res://game/assets/slime_run_spritesheeet.png" type="Texture" id=17]
 [ext_resource path="res://game/cards/do_nothing.tscn" type="PackedScene" id=18]
 [ext_resource path="res://game/enemy.gd" type="Script" id=19]
@@ -25,36 +26,36 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 11.17, 16 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 17 )
-region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 17 )
-region = Rect2( 16, 0, 16, 16 )
+region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 17 )
-region = Rect2( 32, 0, 16, 16 )
+region = Rect2( 16, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 17 )
-region = Rect2( 48, 0, 16, 16 )
+region = Rect2( 32, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 17 )
-region = Rect2( 64, 0, 16, 16 )
+region = Rect2( 48, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 17 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 17 )
 region = Rect2( 80, 0, 16, 16 )
 
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": true,
 "name": "default",
 "speed": 12.0
@@ -86,6 +87,7 @@ __meta__ = {
 position = Vector2( -1.5, 0 )
 frames = SubResource( 1 )
 animation = "idle"
+frame = 3
 playing = true
 offset = Vector2( 3, -4 )
 
@@ -101,7 +103,7 @@ smoothing_enabled = true
 smoothing_speed = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource( 9 )
+shape = SubResource( 2 )
 
 [node name="HealthBar" type="ColorRect" parent="Player"]
 margin_left = -10.0
@@ -114,6 +116,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PhysicsController" type="Node" parent="Player"]
+script = ExtResource( 14 )
+
 [node name="Enemy" type="KinematicBody2D" parent="." groups=[
 "enemy",
 ]]
@@ -121,8 +126,7 @@ position = Vector2( 208, 112 )
 script = ExtResource( 19 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Enemy"]
-frames = SubResource( 8 )
-frame = 1
+frames = SubResource( 9 )
 playing = true
 flip_h = true
 
@@ -139,6 +143,9 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
 shape = SubResource( 10 )
+
+[node name="PhysicsController" type="Node" parent="Enemy"]
+script = ExtResource( 14 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 

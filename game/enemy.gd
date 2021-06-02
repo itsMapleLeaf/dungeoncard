@@ -3,14 +3,13 @@ class_name Enemy
 
 signal damaged_target
 
+const speed := 200.0
 const max_health := 3.0
 var health := max_health
 var target: Node2D
 
-onready var health_bar := $HealthBar as ColorRect
-
-var controller = PhysicsController.new()
-const speed := 200.0
+onready var health_bar := $HealthBar
+onready var controller := $PhysicsController
 
 func _ready():
 	health_bar.rect_pivot_offset = health_bar.rect_size / 2
@@ -22,8 +21,6 @@ func _ready():
 	add_child(movement_timer)
 	
 func _physics_process(delta: float) -> void:
-	controller.update(delta, self)
-	
 	for i in get_slide_count():
 		var collision := get_slide_collision(i)
 		var node: Node2D = collision.collider

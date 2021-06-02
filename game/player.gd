@@ -5,15 +5,11 @@ var health := max_health
 
 const speed := 300.0
 
-onready var health_bar := $HealthBar as ColorRect
-
+onready var health_bar := $HealthBar
 onready var damage_timeout := create_damage_timeout()
+onready var controller := $PhysicsController
 
-var controller = PhysicsController.new()
-
-func _physics_process(delta: float) -> void:
-	controller.update(delta, self)
-	
+func _physics_process(_delta: float) -> void:
 	for i in get_slide_count():
 		var collision := get_slide_collision(i)
 		if collision.collider is Enemy:

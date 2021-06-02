@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://game/cards/move_up.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/cards/move_down.tscn" type="PackedScene" id=2]
@@ -60,6 +60,9 @@ animations = [ {
 "speed": 12.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 8.99142, 8.20338 )
+
 [node name="Game" type="Node"]
 script = ExtResource( 3 )
 
@@ -82,6 +85,7 @@ __meta__ = {
 position = Vector2( -1.5, 0 )
 frames = SubResource( 1 )
 animation = "idle"
+frame = 3
 playing = true
 offset = Vector2( 3, -4 )
 
@@ -110,7 +114,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Enemy" type="Node2D" parent="."]
+[node name="Enemy" type="KinematicBody2D" parent="." groups=[
+"enemy",
+]]
 position = Vector2( 208, 112 )
 script = ExtResource( 19 )
 
@@ -130,6 +136,9 @@ color = Color( 0.901961, 0.298039, 0.298039, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource( 10 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -23,9 +23,9 @@
 - [x] visible enemy health
 - [x] enemy should move towards player every second(?)
 - [x] if enemy wants to move but player is occupying the space, player takes damage
-- [ ] if player tries to move into enemy, player takes damage
+- [x] if player tries to move into enemy, player takes damage
 - [x] player health bar
-- [ ] attacking should make the player face the direction of the enemy they damaged
+- [ ] attacking should make the player face the direction of the enemy they damaged (???)
 
 # enemies
 
@@ -50,3 +50,7 @@
 - [ ] animate attacking
 - [ ] animate damage (flash red)
 - [ ] better ground sprites for clearer tile boundaries
+
+# other things
+
+- [ ] end game

@@ -14,7 +14,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-card_id = "move_up"
+sort_order = 4
 
 [node name="Button" type="TextureButton" parent="."]
 margin_right = 50.0

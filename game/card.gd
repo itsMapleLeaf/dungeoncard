@@ -1,7 +1,7 @@
 extends Control
 class_name Card
 
-export var card_id := ""
+export var sort_order := 99999999999
 
 func get_button():
 	return get_node("Button")

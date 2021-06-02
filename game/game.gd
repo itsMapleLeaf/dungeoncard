@@ -101,16 +101,5 @@ func distance_between(a: Node2D, b: Node2D) -> float:
 	return (a.global_position - b.global_position).length()
 
 class HandSorter:
-	static func sort(a: Node, b: Node) -> bool:
-		var order := [
-			'move_left',
-			'move_down',
-			'move_up',
-			'move_right',
-		]
-		return order.find(get_card_id(a)) < order.find(get_card_id(b))
-
-	static func get_card_id(card: Node) -> String:
-		var child := card.find_node("Card")
-		if child is Card: return child.card_id
-		return ""
+	static func sort(a: Card, b: Card) -> bool:
+		return a.sort_order < b.sort_order

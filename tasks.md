@@ -1,3 +1,5 @@
+# unsorted / starters
+
 - [x] show a row of cards at the bottom of the screen (the hand)
 - [x] create movement cards: up, down, left, right
 - [x] show a random set of three cards
@@ -8,16 +10,32 @@
 - [x] camera
 - [x] clicking a card should move the adventurer in the corresponding direction on the grid
 - [x] sort cards in a user-friendly order
-- [x] animate cards with linear interpolation
 - [x] new cards should pop in from the bottom like toast
 - [x] allow multiple types of cards in one deck
 - [x] idea: cards to move multiple spaces (x1, x3)
+- [ ] manage facing direction of player (?)
+
+# combat
+
 - [x] show an enemy sprite on map
 - [x] add attack card
 - [x] when using attack card, damage an adjacent enemy
 - [x] visible enemy health
+- [ ] enemy should move towards player every second(?)
+- [ ] if enemy wants to move but player is occupying the space, player takes damage
+- [ ] player health bar
+- [ ] attacking should make the player face the direction of the enemy they damaged
+
+# worldgen
+
+- [ ] limit the movement bounds of the player
+- [ ] random player spawn
+- [ ] place random enemies in the room (excluding around player area?)
+- [ ] place a staircase to go to the next room (recreate room but with more enemies)
+
+# juice
+
+- [x] animate cards with linear interpolation
 - [ ] animate movement
 - [ ] animate attacking
-- [ ] manage facing direction of player (?)
-- [ ] attacking should make the player face the direction of the enemy they damaged
-- [ ] limit the movement bounds of the player
+- [ ] better ground sprites for clearer tile boundaries

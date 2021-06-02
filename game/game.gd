@@ -7,14 +7,14 @@ const card_animation_snappiness := 10
 const hand_size = 5
 const required_attack_distance = 32
 
-onready var deck := $ui/deck
-onready var hand := $ui/hand
-onready var player := $player
+onready var deck := $UI/Deck
+onready var hand := $UI/Hand
+onready var player := $Player
 
 
 func _ready() -> void:
 	for card in deck.get_children():
-		card.connect("pressed", self, "play_card", [card])
+		card.get_button().connect("pressed", self, "play_card", [card])
 	
 	randomize()
 	for _i in range(5): draw_card()
@@ -28,14 +28,14 @@ func _process(delta: float) -> void:
 	var hand_center := float(hand_width) / 2
 	
 	for index in range(hand.get_child_count()):
-		var card: TextureButton = cards[index]
+		var card: Card = cards[index]
 		var x := index * (card_width + card_spacing) - hand_center
 		var y := -card_height
 		card.rect_position = lerp(card.rect_position, Vector2(x, y), delta * card_animation_snappiness)
 
 
-func play_card(card: TextureButton) -> void:
-	var intents := card.find_node("intents").get_children()
+func play_card(card: Card) -> void:
+	var intents := card.get_intents()
 	for intent in intents: handle_intent(intent)
 	
 	# need to make sure the card is out of the hand before draw_card()
@@ -46,7 +46,8 @@ func play_card(card: TextureButton) -> void:
 
 
 func draw_card() -> void:
-	var card: TextureButton = deck.get_children()[randi() % deck.get_child_count()]
+	if deck.get_child_count() == 0: return
+	var card: Card = deck.get_children()[randi() % deck.get_child_count()]
 	
 	Helpers.reparent(card, deck, hand)
 	

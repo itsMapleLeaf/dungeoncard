@@ -4,8 +4,8 @@ const card_width := 50
 const card_height := card_width
 const card_spacing := 4
 const card_animation_snappiness := 10
-const hand_size = 5
-const required_attack_distance = 32
+const hand_size := 5
+const required_attack_distance := 32
 
 onready var deck := $UI/Deck
 onready var hand := $UI/Hand
@@ -13,11 +13,16 @@ onready var player := $Player
 
 
 func _ready() -> void:
+	randomize()
+
 	for card in deck.get_children():
 		card.get_button().connect("pressed", self, "play_card", [card])
-	
-	randomize()
-	for _i in range(5): draw_card()
+
+	for _i in range(5):
+		draw_card()
+		
+	for enemy in get_enemies():
+		(enemy as Enemy).set_target(player)
 
 
 func _process(delta: float) -> void:
@@ -90,7 +95,7 @@ func get_closest(nodes: Array, pivot: Node2D) -> Node2D:
 		if not (node is Node2D):
 			continue
 		
-		var distance = distance_between(node, pivot)
+		var distance := distance_between(node, pivot)
 		if distance < closest_dist:
 			closest = node
 			closest_dist = distance

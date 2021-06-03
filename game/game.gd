@@ -6,32 +6,36 @@ const card_spacing := 4
 const card_animation_snappiness := 10
 const hand_size := 5
 const required_attack_distance := 32
+const map_scale = 32
 
 onready var deck := $UI/Deck
 onready var hand := $UI/Hand
-onready var player := $Player
 
+var map_size := 7
+
+onready var player: Player = preload("res://game/player.tscn").instance()
 
 func _ready() -> void:
 	randomize()
+	
+	# init player
+	add_child(player)
+	player.map_pos = random_map_position()
+	
+	# init enemies
+	add_child(preload("res://game/slime.tscn").instance())
 
+	# init cards
 	for card in deck.get_children():
 		card.get_button().connect("pressed", self, "play_card", [card])
-
+	
 	for _i in range(5):
 		draw_card()
-		
-	for i in get_enemies():
-		var enemy := i as Enemy
-		enemy.set_target(player)
-		enemy.connect("damaged_target", self, "damage_player")
 
-func damage_player():
-	player.damage()
 
 func _process(delta: float) -> void:
 	var cards := hand.get_children()
-	cards.sort_custom(HandSorter, "sort")
+	cards.sort_custom(self, "sort_by_sort_order")
 	
 	var hand_width := cards.size() * (card_width + card_spacing) - card_spacing
 	var hand_center := float(hand_width) / 2
@@ -42,6 +46,12 @@ func _process(delta: float) -> void:
 		var y := -card_height
 		card.rect_position = lerp(card.rect_position, Vector2(x, y), delta * card_animation_snappiness)
 
+
+func random_map_position() -> Vector2:
+	return Vector2(randi() % map_size, randi() % map_size)
+
+func damage_player() -> void:
+	player.damage()
 
 func play_card(card: Card) -> void:
 	var intents := card.get_intents()
@@ -61,7 +71,7 @@ func draw_card() -> void:
 	Helpers.reparent(card, deck, hand)
 	
 	var cards := hand.get_children()
-	cards.sort_custom(HandSorter, "sort")
+	cards.sort_custom(self, "sort_by_sort_order")
 	
 	var hand_width := cards.size() * (card_width + card_spacing) - card_spacing
 	var hand_center := float(hand_width) / 2
@@ -75,21 +85,18 @@ func draw_card() -> void:
 
 func handle_intent(intent: Object) -> void:
 	if intent is MovementIntent:
-		player.move(intent.get_direction_vector())
-
+		player.map_pos += intent.get_direction_vector()
 	if intent is AttackIntent:
-		var enemies := get_enemies()
-		var closest: Enemy = get_closest(enemies, player)
-		if closest and distance_between(player, closest) <= required_attack_distance:
-			closest.damage()
+		try_attack()
 
-func get_enemies() -> Array:
-	var enemies := []
-	for child in get_children():
-		if child is Enemy:
-			enemies.append(child)
-	return enemies
-	
+func try_attack() -> void:
+	for enemy in get_children(): if enemy is Enemy:
+		for dir in [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]:
+			if enemy.map_pos == player.map_pos + dir:
+				var is_dead = enemy.damage()
+				if is_dead: enemy.queue_free()
+				return
+
 func get_closest(nodes: Array, pivot: Node2D) -> Node2D:
 	if nodes.empty(): return null
 
@@ -109,6 +116,5 @@ func get_closest(nodes: Array, pivot: Node2D) -> Node2D:
 func distance_between(a: Node2D, b: Node2D) -> float:
 	return (a.global_position - b.global_position).length()
 
-class HandSorter:
-	static func sort(a: Card, b: Card) -> bool:
-		return a.sort_order < b.sort_order
+func sort_by_sort_order(a: Card, b: Card) -> bool:
+	return a.sort_order < b.sort_order

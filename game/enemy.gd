@@ -1,12 +1,14 @@
-extends KinematicBody2D
+extends Node2D
 class_name Enemy
 
 signal damaged_target
 
+var map_pos := Vector2()
+var target_map_pos: Vector2
+
 const speed := 200.0
 const max_health := 3.0
 var health := max_health
-var target: Node2D
 
 onready var health_bar := $HealthBar
 onready var controller := $PhysicsController
@@ -20,33 +22,25 @@ func _ready():
 	movement_timer.connect("timeout", self, "move_towards_target")
 	add_child(movement_timer)
 	
-func _physics_process(delta: float) -> void:
-	for i in get_slide_count():
-		var collision := get_slide_collision(i)
-		var node: Node2D = collision.collider
-		if node.is_in_group("player"):
-			emit_signal("damaged_target")
+func _process(delta: float) -> void:
+	global_position = lerp(global_position, map_pos * 32, delta * 10)
 
-func damage() -> void:
+func damage() -> bool:
 	health -= 1
 	health_bar.rect_scale.x = health / max_health
-	if health <= 0:
-		queue_free()
+	return health <= 0
 		
-func set_target(new_target: Node2D) -> void:
-	if target: target.disconnect("tree_exiting", self, "clear_target")
-	target = new_target
-	target.connect("tree_exiting", self, "clear_target")
+func set_target(new_target: Vector2) -> void:
+	target_map_pos = new_target
 	
 func clear_target() -> void:
-	target = null
+	# i don't know how to set target_map_pos to null so todo
+	pass
 
 func move_towards_target() -> void:
-	if !target: return
+	if !target_map_pos: return
 	
-	# AStar would be more correct for this but later aaaaa
-	var direction := global_position.direction_to(target.global_position)
-	controller.velocity = direction * speed
+	map_pos += to_nearest_cardinal(map_pos.direction_to(target_map_pos))
 
 func to_nearest_cardinal(vec: Vector2) -> Vector2:
 	if abs(vec.x) > abs(vec.y):

@@ -1,4 +1,7 @@
-extends KinematicBody2D
+extends Node2D
+class_name Player
+
+var map_pos := Vector2()
 
 const speed := 300.0
 
@@ -12,14 +15,18 @@ onready var health_bar := $HealthBar
 onready var controller := $PhysicsController
 onready var sprite := $IdleAnimation
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	global_position = lerp(global_position, map_pos * 32, delta * 10)
 	sprite.modulate.a = 0.5 if ghosting else 1.0
-
-func _physics_process(_delta: float) -> void:
-	for i in get_slide_count():
-		var collision := get_slide_collision(i)
-		if collision.collider is Enemy:
-			damage()
+	
+func _input(event):
+	# debug movement
+	if event is InputEventKey and event.is_pressed():
+		match event.scancode:
+			KEY_LEFT: map_pos += Vector2.LEFT
+			KEY_RIGHT: map_pos += Vector2.RIGHT
+			KEY_UP: map_pos += Vector2.UP
+			KEY_DOWN: map_pos += Vector2.DOWN
 
 func move(direction: Vector2) -> void:
 	controller.velocity = direction * speed

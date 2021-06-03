@@ -12,7 +12,6 @@ var ghosting := false # if the player can take damage
 const ghosting_time := 1.5
 
 onready var health_bar := $HealthBar
-onready var controller := $PhysicsController
 onready var sprite := $IdleAnimation
 
 func _process(delta: float) -> void:
@@ -27,9 +26,6 @@ func _input(event):
 			KEY_RIGHT: map_pos += Vector2.RIGHT
 			KEY_UP: map_pos += Vector2.UP
 			KEY_DOWN: map_pos += Vector2.DOWN
-
-func move(direction: Vector2) -> void:
-	controller.velocity = direction * speed
 
 func damage() -> void:
 	if ghosting: return

@@ -11,7 +11,6 @@ const max_health := 3.0
 var health := max_health
 
 onready var health_bar := $HealthBar
-onready var controller := $PhysicsController
 
 func _ready():
 	health_bar.rect_pivot_offset = health_bar.rect_size / 2
@@ -34,12 +33,10 @@ func set_target(new_target: Vector2) -> void:
 	target_map_pos = new_target
 	
 func clear_target() -> void:
-	# i don't know how to set target_map_pos to null so todo
-	pass
+	pass # i don't know how to set target_map_pos to null so todo
 
 func move_towards_target() -> void:
 	if !target_map_pos: return
-	
 	map_pos += to_nearest_cardinal(map_pos.direction_to(target_map_pos))
 
 func to_nearest_cardinal(vec: Vector2) -> Vector2:

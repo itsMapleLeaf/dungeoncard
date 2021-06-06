@@ -55,9 +55,9 @@ _global_script_classes=[ {
 "path": "res://game/player.gd"
 }, {
 "base": "Node2D",
-"class": "PlayerOld",
+"class": "Slime",
 "language": "GDScript",
-"path": "res://game/player_old.gd"
+"path": "res://game/slime.gd"
 } ]
 _global_script_class_icons={
 "AttackIntent": "",
@@ -69,7 +69,7 @@ _global_script_class_icons={
 "HoverAnimation": "",
 "MovementIntent": "",
 "Player": "",
-"PlayerOld": ""
+"Slime": ""
 }
 
 [application]
@@ -103,7 +103,7 @@ texture={
 "compress/normal_map": 0,
 "detect_3d": false,
 "flags/anisotropic": false,
-"flags/filter": false,
+"flags/filter": true,
 "flags/mipmaps": false,
 "flags/repeat": 0,
 "flags/srgb": 2,

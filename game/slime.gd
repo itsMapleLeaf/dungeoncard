@@ -3,8 +3,6 @@ class_name Slime
 
 const animation_speed := 4
 
-var field_pos := Vector2()
-
 var time := 0.0
 
 onready var body := $Body as Sprite

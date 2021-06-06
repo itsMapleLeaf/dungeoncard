@@ -3,9 +3,7 @@ extends Node
 const field_size := Vector2(7, 5)
 const platform_spacing := Vector2(8, 4)
 
-var player := preload("res://game/player.tscn").instance() as Player
-var player_pos := Vector2()
-const player_animation_speed := 18
+var player: Entity
 
 onready var viewport_center := get_viewport().size / 2
 
@@ -15,6 +13,8 @@ onready var platform_size := platform_base.get_rect().size
 onready var field_screen_top_left := \
 	viewport_center + platform_size / 2 - field_size / 2 * \
 	(platform_size + platform_spacing) + platform_spacing
+	
+var entities := []
 
 func _ready() -> void:
 	randomize()
@@ -28,11 +28,13 @@ func _ready() -> void:
 	spawn_player(spawn_positions)
 	
 func _process(delta: float) -> void:
-	player.animate_screen_position(get_screen_pos(player_pos), delta)
-	
-	for child in get_children():
-		if child is Slime:
-			child.global_position = get_screen_pos(child.field_pos)
+	for i in entities:
+		var entity := i as Entity
+		var node := entity.node
+		if node is Player:
+			node.animate_screen_position(get_screen_pos(entity.field_pos), delta)
+		if node is Slime:
+			node.global_position = get_screen_pos(entity.field_pos)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey: if event.is_pressed(): match event.scancode:
@@ -51,12 +53,14 @@ func spawn_enemies(spawn_positions: Array) -> void:
 	for i in 3:
 		var slime := preload("res://game/slime.tscn").instance() as Slime
 		add_child(slime)
-		slime.field_pos = spawn_positions.pop_front()
+		
+		entities.append(Entity.new(spawn_positions.pop_front(), slime))
 
 func spawn_player(spawn_positions: Array) -> void:
-	add_child(player)
-	player_pos = spawn_positions.pop_front()
-	player.animate_screen_position(get_screen_pos(player_pos), 1)
+	player = Entity.new(spawn_positions.pop_front(), preload("res://game/player.tscn").instance())
+	add_child(player.node)
+	entities.append(player)
+	player.node.animate_screen_position(get_screen_pos(player.field_pos), 1)
 
 func random_field_pos() -> Vector2:
 	return Vector2(randi() % int(field_size.x), randi() % int(field_size.y))
@@ -65,8 +69,10 @@ func get_screen_pos(field_pos: Vector2) -> Vector2:
 	return field_screen_top_left + field_pos * (platform_size + platform_spacing)
 
 func move_player(delta: Vector2) -> void:
-	var new_pos := (player_pos + delta)
-	player_pos = Vector2(
+	var new_pos := (player.field_pos + delta)
+	if is_occupied(new_pos): return
+	
+	player.field_pos = Vector2(
 		clamp(new_pos.x, 0, field_size.x - 1),
 		clamp(new_pos.y, 0, field_size.y - 1)
 	)
@@ -78,3 +84,21 @@ func points_within_area(size: Vector2) -> Array:
 		points.append(Vector2(x, y))
 	
 	return points
+	
+func get_entity_at_position(field_pos: Vector2) -> Entity:
+	for e in entities:
+		if field_pos.is_equal_approx(e.field_pos):
+			return e
+			
+	return null
+	
+func is_occupied(field_pos: Vector2) -> bool:
+	return get_entity_at_position(field_pos) != null
+
+class Entity:
+	var field_pos: Vector2
+	var node: Node2D
+	
+	func _init(field_pos: Vector2, node: Node2D) -> void:
+		self.field_pos = field_pos
+		self.node = node

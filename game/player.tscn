@@ -19,21 +19,21 @@ animations = [ {
 ]]
 script = ExtResource( 2 )
 
-[node name="IdleAnimation" type="AnimatedSprite" parent="."]
-position = Vector2( 16, 16 )
-frames = SubResource( 1 )
-animation = "idle"
-playing = true
-offset = Vector2( 3, -4 )
-
 [node name="Camera" type="Camera2D" parent="."]
-offset = Vector2( 0, 8 )
+offset = Vector2( 0, 32 )
 current = true
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 10.0
 
-[node name="HealthBar" type="ColorRect" parent="."]
+[node name="IdleAnimation" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+frame = 1
+playing = true
+offset = Vector2( 16, 13 )
+
+[node name="HealthBar" type="ColorRect" parent="IdleAnimation"]
 margin_left = 6.0
 margin_top = -3.0
 margin_right = 26.0

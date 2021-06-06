@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 class_name Enemy
 
 signal damaged_target

@@ -1,49 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game/cards/move_up.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/cards/move_down.tscn" type="PackedScene" id=2]
-[ext_resource path="res://game/game.gd" type="Script" id=3]
+[ext_resource path="res://game/game_temp.gd" type="Script" id=3]
 [ext_resource path="res://game/cards/move_left.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/cards/move_right.tscn" type="PackedScene" id=5]
-[ext_resource path="res://game/assets/tiles/FullTileset.png" type="Texture" id=6]
 [ext_resource path="res://game/deck.gd" type="Script" id=12]
 [ext_resource path="res://game/cards/attack.tscn" type="PackedScene" id=13]
 [ext_resource path="res://game/cards/do_nothing.tscn" type="PackedScene" id=18]
 
-[sub_resource type="TileSet" id=1]
-0/name = "FullTileset.png 0"
-0/texture = ExtResource( 6 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 288, 256 )
-0/tile_mode = 1
-0/autotile/bitmask_mode = 1
-0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 432, Vector2( 0, 1 ), 438, Vector2( 0, 2 ), 54, Vector2( 0, 4 ), 507, Vector2( 0, 7 ), 255, Vector2( 1, 0 ), 504, Vector2( 1, 1 ), 511, Vector2( 1, 2 ), 63, Vector2( 1, 4 ), 510, Vector2( 1, 7 ), 447, Vector2( 2, 0 ), 216, Vector2( 2, 1 ), 219, Vector2( 2, 2 ), 27, Vector2( 2, 7 ), 432, Vector2( 3, 7 ), 216 ]
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 32, 32 )
-0/autotile/spacing = 0
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-
 [node name="Game" type="Node"]
 script = ExtResource( 3 )
-
-[node name="Map" type="TileMap" parent="."]
-tile_set = SubResource( 1 )
-cell_size = Vector2( 32, 32 )
-cell_quadrant_size = 32
-format = 1
-tile_data = PoolIntArray( 0, 131074, 0, 1, 262150, 0, 2, 196614, 0, 65536, 327682, 0, 65537, 458760, 0, 131072, 524290, 0, 131073, 524296, 0, 131080, 0, 0, 131081, 0, 1, 131082, 0, 1, 131083, 0, 1, 131084, 0, 458755, 196609, 0, 0, 196610, 0, 1, 196611, 0, 1, 196612, 0, 2, 196614, 0, 458754, 196615, 0, 1, 196616, 0, 262145, 196617, 0, 65537, 196618, 0, 65537, 196619, 0, 65537, 196620, 0, 262144, 196621, 0, 458755, 262145, 0, 65536, 262146, 0, 65537, 262147, 0, 65537, 262148, 0, 262144, 262149, 0, 1, 262150, 0, 262145, 262151, 0, 65537, 262152, 0, 65537, 262153, 0, 65537, 262154, 0, 65537, 262155, 0, 65537, 262156, 0, 65537, 262157, 0, 65538, 327681, 0, 65536, 327682, 0, 65537, 327683, 0, 65537, 327684, 0, 65537, 327685, 0, 65537, 327686, 0, 65537, 327687, 0, 65537, 327688, 0, 65537, 327689, 0, 65537, 327690, 0, 65537, 327691, 0, 458752, 327692, 0, 131073, 327693, 0, 131074, 393217, 0, 65536, 393218, 0, 65537, 393219, 0, 65537, 393220, 0, 65537, 393221, 0, 65537, 393222, 0, 65537, 393223, 0, 65537, 393224, 0, 65537, 393225, 0, 65537, 393226, 0, 65537, 393227, 0, 65538, 458753, 0, 65536, 458754, 0, 65537, 458755, 0, 65537, 458756, 0, 65537, 458757, 0, 65537, 458758, 0, 65537, 458759, 0, 65537, 458760, 0, 65537, 458761, 0, 65537, 458762, 0, 65537, 458763, 0, 262144, 458764, 0, 1, 458765, 0, 458755, 524289, 0, 131072, 524290, 0, 131073, 524291, 0, 458753, 524292, 0, 65537, 524293, 0, 65537, 524294, 0, 65537, 524295, 0, 65537, 524296, 0, 65537, 524297, 0, 65537, 524298, 0, 65537, 524299, 0, 65537, 524300, 0, 65537, 524301, 0, 65538, 589827, 0, 131072, 589828, 0, 131073, 589829, 0, 458753, 589830, 0, 65537, 589831, 0, 65537, 589832, 0, 65537, 589833, 0, 65537, 589834, 0, 458752, 589835, 0, 131073, 589836, 0, 131073, 589837, 0, 131074, 655365, 0, 131072, 655366, 0, 131073, 655367, 0, 131073, 655368, 0, 131073, 655369, 0, 131073, 655370, 0, 131074 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 

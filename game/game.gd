@@ -6,7 +6,7 @@ const card_spacing := 4
 const card_animation_snappiness := 10
 const hand_size := 5
 const required_attack_distance := 32
-const map_scale = 32
+const map_scale := 32
 
 onready var deck := $UI/Deck
 onready var hand := $UI/Hand
@@ -17,13 +17,16 @@ onready var player: Player = preload("res://game/player.tscn").instance()
 
 func _ready() -> void:
 	randomize()
-	
+
 	# init player
-	add_child(player)
 	player.map_pos = random_map_position()
+	add_child(player)
 	
 	# init enemies
-	add_child(preload("res://game/slime.tscn").instance())
+	for i in 5:
+		var enemy = preload("res://game/slime.tscn").instance()
+		enemy.map_pos = random_map_position()
+		add_child(enemy)
 
 	# init cards
 	for card in deck.get_children():
@@ -85,17 +88,9 @@ func draw_card() -> void:
 
 func handle_intent(intent: Object) -> void:
 	if intent is MovementIntent:
-		player.map_pos += intent.get_direction_vector()
+		player.move(intent.get_direction_vector())
 	if intent is AttackIntent:
-		try_attack()
-
-func try_attack() -> void:
-	for enemy in get_children(): if enemy is Enemy:
-		for dir in [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]:
-			if enemy.map_pos == player.map_pos + dir:
-				var is_dead = enemy.damage()
-				if is_dead: enemy.queue_free()
-				return
+		player.try_attack()
 
 func get_closest(nodes: Array, pivot: Node2D) -> Node2D:
 	if nodes.empty(): return null

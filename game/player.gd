@@ -21,3 +21,8 @@ func animate_screen_position(pos: Vector2, delta: float) -> void:
 	right_hand.global_position = lerp(right_hand.global_position, pos + right_hand_offset, min(delta * animation_speed * 0.7, 1))
 	left_hand.global_position = lerp(left_hand.global_position, pos + left_hand_offset, min(delta * animation_speed * 0.7, 1))
 	shadow.global_position = lerp(shadow.global_position, pos + shadow_offset, min(delta * animation_speed, 1))
+
+func play_attack_animation() -> void:
+	var player := $AnimationPlayer as AnimationPlayer
+	player.stop()
+	player.play("SwordSwing")

@@ -44,6 +44,7 @@ func _input(event: InputEvent) -> void:
 		KEY_DOWN: move_player(Vector2.DOWN)
 		KEY_LEFT: move_player(Vector2.LEFT)
 		KEY_RIGHT: move_player(Vector2.RIGHT)
+		KEY_SPACE: (player.node as Player).play_attack_animation()
 
 func create_platform(field_pos: Vector2) -> void:
 	var platform := platform_base.duplicate()
@@ -60,9 +61,6 @@ func spawn_player(field_pos: Vector2) -> void:
 	add_child(player_node)
 	player = entity_manager.add_at(field_pos, player_node)
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
-
-func random_field_pos() -> Vector2:
-	return Vector2(randi() % int(field_size.x), randi() % int(field_size.y))
 
 func get_screen_pos(field_pos: Vector2) -> Vector2:
 	return field_screen_top_left + field_pos * (platform_size + platform_spacing)

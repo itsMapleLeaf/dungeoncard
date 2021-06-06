@@ -40,6 +40,11 @@ _global_script_classes=[ {
 "path": "res://game/grid.gd"
 }, {
 "base": "Node",
+"class": "HoverAnimation",
+"language": "GDScript",
+"path": "res://game/hover_animation.gd"
+}, {
+"base": "Node",
 "class": "MovementIntent",
 "language": "GDScript",
 "path": "res://game/intents/movement_intent.gd"
@@ -48,6 +53,11 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://game/player.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerOld",
+"language": "GDScript",
+"path": "res://game/player_old.gd"
 } ]
 _global_script_class_icons={
 "AttackIntent": "",
@@ -56,8 +66,10 @@ _global_script_class_icons={
 "GameWorld": "",
 "GitAPI": "",
 "Grid": "",
+"HoverAnimation": "",
 "MovementIntent": "",
-"Player": ""
+"Player": "",
+"PlayerOld": ""
 }
 
 [application]
@@ -72,10 +84,8 @@ Helpers="*res://game/helpers.gd"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
-window/size/test_width=1600
-window/size/test_height=900
+window/size/width=1600
+window/size/height=900
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

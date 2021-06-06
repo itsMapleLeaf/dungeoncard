@@ -19,13 +19,15 @@ onready var field_screen_top_left := \
 func _ready() -> void:
 	randomize()
 	
-	create_platforms()
+	var field_positions := points_within_area(field_size)
 	
-	var spawn_positions := points_within_area(field_size)
-	spawn_positions.shuffle()
+	for pos in field_positions:
+		create_platform(pos)
 	
-	for i in 3: spawn_enemy(spawn_positions.pop_front())
-	spawn_player(spawn_positions.pop_front())
+	field_positions.shuffle()
+	
+	for i in 3: spawn_enemy(field_positions.pop_front())
+	spawn_player(field_positions.pop_front())
 	
 func _process(delta: float) -> void:
 	for i in entity_manager.entities:
@@ -43,11 +45,10 @@ func _input(event: InputEvent) -> void:
 		KEY_LEFT: move_player(Vector2.LEFT)
 		KEY_RIGHT: move_player(Vector2.RIGHT)
 
-func create_platforms() -> void:
-	for point in points_within_area(field_size):
-		var platform := platform_base.duplicate()
-		platform.global_position = get_screen_pos(point)
-		add_child(platform)
+func create_platform(field_pos: Vector2) -> void:
+	var platform := platform_base.duplicate()
+	platform.global_position = get_screen_pos(field_pos)
+	add_child(platform)
 
 func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime.tscn").instance() as Slime

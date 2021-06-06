@@ -2,8 +2,10 @@ extends Node
 
 const field_size := Vector2(7, 5)
 const platform_spacing := Vector2(8, 4)
+	
+var entity_manager := EntityManager.new()
 
-var player: Entity
+var player: EntityManager.Entity
 
 onready var viewport_center := get_viewport().size / 2
 
@@ -14,8 +16,6 @@ onready var field_screen_top_left := \
 	viewport_center + platform_size / 2 - field_size / 2 * \
 	(platform_size + platform_spacing) + platform_spacing
 	
-var entities := []
-
 func _ready() -> void:
 	randomize()
 	
@@ -24,12 +24,12 @@ func _ready() -> void:
 	var spawn_positions := points_within_area(field_size)
 	spawn_positions.shuffle()
 	
-	spawn_enemies(spawn_positions)
-	spawn_player(spawn_positions)
+	for i in 3: spawn_enemy(spawn_positions.pop_front())
+	spawn_player(spawn_positions.pop_front())
 	
 func _process(delta: float) -> void:
-	for i in entities:
-		var entity := i as Entity
+	for i in entity_manager.entities:
+		var entity := i as EntityManager.Entity
 		var node := entity.node
 		if node is Player:
 			node.animate_screen_position(get_screen_pos(entity.field_pos), delta)
@@ -49,18 +49,16 @@ func create_platforms() -> void:
 		platform.global_position = get_screen_pos(point)
 		add_child(platform)
 
-func spawn_enemies(spawn_positions: Array) -> void:
-	for i in 3:
-		var slime := preload("res://game/slime.tscn").instance() as Slime
-		add_child(slime)
-		
-		entities.append(Entity.new(spawn_positions.pop_front(), slime))
+func spawn_enemy(field_pos: Vector2) -> void:
+	var slime := preload("res://game/slime.tscn").instance() as Slime
+	add_child(slime)
+	entity_manager.add_at(field_pos, slime)
 
-func spawn_player(spawn_positions: Array) -> void:
-	player = Entity.new(spawn_positions.pop_front(), preload("res://game/player.tscn").instance())
-	add_child(player.node)
-	entities.append(player)
-	player.node.animate_screen_position(get_screen_pos(player.field_pos), 1)
+func spawn_player(field_pos: Vector2) -> void:
+	var player_node := preload("res://game/player.tscn").instance() as Player
+	add_child(player_node)
+	player = entity_manager.add_at(field_pos, player_node)
+	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
 
 func random_field_pos() -> Vector2:
 	return Vector2(randi() % int(field_size.x), randi() % int(field_size.y))
@@ -70,7 +68,7 @@ func get_screen_pos(field_pos: Vector2) -> Vector2:
 
 func move_player(delta: Vector2) -> void:
 	var new_pos := (player.field_pos + delta)
-	if is_occupied(new_pos): return
+	if entity_manager.is_occupied(new_pos): return
 	
 	player.field_pos = Vector2(
 		clamp(new_pos.x, 0, field_size.x - 1),
@@ -84,21 +82,3 @@ func points_within_area(size: Vector2) -> Array:
 		points.append(Vector2(x, y))
 	
 	return points
-	
-func get_entity_at_position(field_pos: Vector2) -> Entity:
-	for e in entities:
-		if field_pos.is_equal_approx(e.field_pos):
-			return e
-			
-	return null
-	
-func is_occupied(field_pos: Vector2) -> bool:
-	return get_entity_at_position(field_pos) != null
-
-class Entity:
-	var field_pos: Vector2
-	var node: Node2D
-	
-	func _init(field_pos: Vector2, node: Node2D) -> void:
-		self.field_pos = field_pos
-		self.node = node

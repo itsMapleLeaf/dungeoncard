@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/entity_manager.gd"
 }, {
-"base": "Node",
-"class": "GameWorld",
-"language": "GDScript",
-"path": "res://game/game_world.gd"
-}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
@@ -63,7 +58,6 @@ _global_script_class_icons={
 "Card": "",
 "Enemy": "",
 "EntityManager": "",
-"GameWorld": "",
 "GitAPI": "",
 "Grid": "",
 "Helpers": "",

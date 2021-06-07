@@ -1,66 +1,39 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://game/cards/move_up.tscn" type="PackedScene" id=1]
-[ext_resource path="res://game/cards/move_down.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/game_temp.gd" type="Script" id=3]
-[ext_resource path="res://game/cards/move_left.tscn" type="PackedScene" id=4]
-[ext_resource path="res://game/cards/move_right.tscn" type="PackedScene" id=5]
-[ext_resource path="res://game/deck.gd" type="Script" id=12]
-[ext_resource path="res://game/cards/attack.tscn" type="PackedScene" id=13]
-[ext_resource path="res://game/cards/do_nothing.tscn" type="PackedScene" id=18]
 
 [node name="Game" type="Node"]
 script = ExtResource( 3 )
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="Deck" type="GridContainer" parent="UI"]
-visible = false
-margin_right = 320.0
-margin_bottom = 104.0
-custom_constants/vseparation = 54
-custom_constants/hseparation = 54
-columns = 6
-script = ExtResource( 12 )
+[node name="PlatformGridContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -214.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Card" parent="UI/Deck" instance=ExtResource( 2 )]
+[node name="PlatformGrid" type="GridContainer" parent="PlatformGridContainer"]
+margin_left = 800.0
+margin_top = 343.0
+margin_right = 800.0
+margin_bottom = 343.0
+custom_constants/vseparation = 130
+custom_constants/hseparation = 190
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Card2" parent="UI/Deck" instance=ExtResource( 4 )]
-margin_left = 54.0
-margin_right = 54.0
+[node name="World" type="Node2D" parent="."]
 
-[node name="Card3" parent="UI/Deck" instance=ExtResource( 5 )]
-margin_left = 108.0
-margin_right = 108.0
-
-[node name="Card4" parent="UI/Deck" instance=ExtResource( 1 )]
-margin_left = 162.0
-margin_right = 162.0
-
-[node name="do_nothing" parent="UI/Deck" instance=ExtResource( 18 )]
-margin_left = 216.0
-margin_right = 216.0
-
-[node name="Card5" parent="UI/Deck" instance=ExtResource( 13 )]
-margin_left = 270.0
-margin_right = 270.0
-
-[node name="Card10" parent="UI/Deck" instance=ExtResource( 13 )]
-margin_left = 270.0
-margin_top = 54.0
-margin_right = 270.0
-margin_bottom = 54.0
-
-[node name="Hand" type="Control" parent="UI"]
-anchor_left = 0.5
+[node name="Hand" type="HBoxContainer" parent="."]
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -5.0
-margin_bottom = -5.0
+margin_top = -122.0
+custom_constants/separation = 210
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

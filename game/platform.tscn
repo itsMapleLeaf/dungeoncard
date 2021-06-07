@@ -2,6 +2,11 @@
 
 [ext_resource path="res://game/assets/platform.png" type="Texture" id=1]
 
-[node name="platform" type="Sprite"]
+[node name="Platform" type="Control"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 offset = Vector2( 0, 6 )

@@ -45,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://game/grid.gd"
 }, {
 "base": "Node",
+"class": "Helpers",
+"language": "GDScript",
+"path": "res://game/helpers.gd"
+}, {
+"base": "Node",
 "class": "HoverAnimation",
 "language": "GDScript",
 "path": "res://game/hover_animation.gd"
@@ -72,6 +77,7 @@ _global_script_class_icons={
 "GameWorld": "",
 "GitAPI": "",
 "Grid": "",
+"Helpers": "",
 "HoverAnimation": "",
 "MovementIntent": "",
 "Player": "",
@@ -83,10 +89,6 @@ _global_script_class_icons={
 config/name="dungeoncard"
 run/main_scene="res://game/game.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-Helpers="*res://game/helpers.gd"
 
 [display]
 

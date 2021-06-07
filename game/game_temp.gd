@@ -1,23 +1,21 @@
 extends Node
 
-const field_size := Vector2(7, 5)
-const platform_spacing := Vector2(8, 4)
+const field_size := Vector2(5, 5)
+const platform_separation := Vector2(190, 130)
 	
 var entity_manager := EntityManager.new()
 
 var player: EntityManager.Entity
 
-onready var viewport_center := get_viewport().size / 2
+onready var platform_grid := $PlatformGridContainer/PlatformGrid as GridContainer
+onready var world := $World as Node2D
+onready var hand := $Hand as HBoxContainer
 
-onready var platform_base := preload("res://game/platform.tscn").instance() as Sprite
-onready var platform_size := platform_base.get_rect().size
-
-onready var field_screen_top_left := \
-	viewport_center + platform_size / 2 - field_size / 2 * \
-	(platform_size + platform_spacing) + platform_spacing
-	
 func _ready() -> void:
 	randomize()
+	
+	platform_grid.add_constant_override("hseparation", platform_separation.x)
+	platform_grid.add_constant_override("vseparation", platform_separation.y)
 	
 	var field_positions := points_within_area(field_size)
 	
@@ -28,6 +26,13 @@ func _ready() -> void:
 	
 	for i in 3: spawn_enemy(field_positions.pop_front())
 	spawn_player(field_positions.pop_front())
+	
+	var card_types := Card.get_card_types()
+	card_types.shuffle()
+	for type in card_types:
+		var card := preload("res://game/card.tscn").instance() as Card
+		hand.add_child(card)
+		card.set_type(type)
 	
 func _process(delta: float) -> void:
 	for i in entity_manager.entities:
@@ -47,23 +52,22 @@ func _input(event: InputEvent) -> void:
 		KEY_SPACE: (player.node as Player).play_attack_animation()
 
 func create_platform(field_pos: Vector2) -> void:
-	var platform := platform_base.duplicate()
-	platform.global_position = get_screen_pos(field_pos)
-	add_child(platform)
+	var platform := preload("res://game/platform.tscn").instance() as Control
+	platform_grid.add_child(platform)
 
 func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime.tscn").instance() as Slime
-	add_child(slime)
+	world.add_child(slime)
 	entity_manager.add_at(field_pos, slime)
 
 func spawn_player(field_pos: Vector2) -> void:
 	var player_node := preload("res://game/player.tscn").instance() as Player
-	add_child(player_node)
+	world.add_child(player_node)
 	player = entity_manager.add_at(field_pos, player_node)
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
-
+	
 func get_screen_pos(field_pos: Vector2) -> Vector2:
-	return field_screen_top_left + field_pos * (platform_size + platform_spacing)
+	return platform_grid.rect_position + field_pos * platform_separation
 
 func move_player(delta: Vector2) -> void:
 	var new_pos := (player.field_pos + delta)

@@ -11,6 +11,8 @@ onready var platform_grid := $PlatformGridContainer/PlatformGrid as GridContaine
 onready var world := $World as Node2D
 onready var hand := $Hand as HBoxContainer
 
+onready var deck := []
+
 func _ready() -> void:
 	randomize()
 	
@@ -19,21 +21,22 @@ func _ready() -> void:
 	
 	var field_positions := points_within_area(field_size)
 	
-	for pos in field_positions:
-		create_platform(pos)
+	for i in field_positions: create_platform()
 	
 	field_positions.shuffle()
 	
 	for i in 3: spawn_enemy(field_positions.pop_front())
 	spawn_player(field_positions.pop_front())
 	
-	var card_types := Card.get_card_types()
-	card_types.shuffle()
-	for type in card_types:
+	for type in Card.get_card_types():
 		var card := preload("res://game/card.tscn").instance() as Card
-		hand.add_child(card)
 		card.set_type(type)
+		card.connect("clicked", self, "play_card", [card])
+		deck.append(card)
 	
+	deck.shuffle()
+	for i in 3: draw_card()
+
 func _process(delta: float) -> void:
 	for i in entity_manager.entities:
 		var entity := i as EntityManager.Entity
@@ -51,7 +54,7 @@ func _input(event: InputEvent) -> void:
 		KEY_RIGHT: move_player(Vector2.RIGHT)
 		KEY_SPACE: (player.node as Player).play_attack_animation()
 
-func create_platform(field_pos: Vector2) -> void:
+func create_platform() -> void:
 	var platform := preload("res://game/platform.tscn").instance() as Control
 	platform_grid.add_child(platform)
 
@@ -65,7 +68,7 @@ func spawn_player(field_pos: Vector2) -> void:
 	world.add_child(player_node)
 	player = entity_manager.add_at(field_pos, player_node)
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
-	
+
 func get_screen_pos(field_pos: Vector2) -> Vector2:
 	return platform_grid.rect_position + field_pos * platform_separation
 
@@ -77,6 +80,37 @@ func move_player(delta: Vector2) -> void:
 		clamp(new_pos.x, 0, field_size.x - 1),
 		clamp(new_pos.y, 0, field_size.y - 1)
 	)
+	
+func try_attack():
+	(player.node as Player).play_attack_animation()
+	for dir in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
+		var ent := entity_manager.get_entity_at_position(player.field_pos + dir)
+		if ent != null and ent.node is Slime:
+			entity_manager.remove(ent)
+			break
+
+func draw_card():
+	deck.shuffle()
+	var card := deck.pop_front() as Card
+	hand.add_child(card)
+	card.play_reveal_animation()
+	
+func play_card(card: Card):
+	match card.type:
+		Card.CardType.MOVE_LEFT:
+			move_player(Vector2.LEFT)
+		Card.CardType.MOVE_RIGHT:
+			move_player(Vector2.RIGHT)
+		Card.CardType.MOVE_UP:
+			move_player(Vector2.UP)
+		Card.CardType.MOVE_DOWN:
+			move_player(Vector2.DOWN)
+		Card.CardType.ATTACK:
+			try_attack()
+
+	draw_card()
+	hand.remove_child(card)
+	deck.append(card)
 
 func points_within_area(size: Vector2) -> Array:
 	var points := []

@@ -32,7 +32,7 @@ func _ready() -> void:
 	build_deck()
 	deck.shuffle()
 	for i in 3:
-		draw_card()
+		hand.add_child(draw_card())
 
 func _process(delta: float) -> void:
 	for i in entity_manager.entities:
@@ -93,11 +93,11 @@ func build_deck():
 		card.connect("clicked", self, "play_card", [card])
 		deck.append(card)
 
-func draw_card():
+func draw_card() -> Card:
 	deck.shuffle()
 	var card := deck.pop_front() as Card
-	hand.add_child(card)
 	card.play_reveal_animation()
+	return card
 	
 func play_card(card: Card):
 	match card.type:
@@ -112,8 +112,13 @@ func play_card(card: Card):
 		Card.CardType.ATTACK:
 			try_attack()
 
-	draw_card()
+	var new_card := draw_card()
+
+	var index := hand.get_children().find(card)
+
 	hand.remove_child(card)
 	deck.append(card)
-
-
+	
+	# put the card back, replacing the position of the one that was played
+	hand.add_child(new_card)
+	hand.move_child(new_card, index)

@@ -24,6 +24,10 @@ func _ready() -> void:
 	for i in field_size.x * field_size.y:
 		create_platform()
 	
+	# other starting positions depend on the grid being the correct size/position,
+	# so we'll wait until it's sorted that layout stuff out before continuing
+	yield(platform_grid, "sort_children")
+	
 	var enemy_spawn_positions := Helpers.points_within_rect(Rect2(Vector2(2, 0), field_size - Vector2(2, 0)))
 	enemy_spawn_positions.shuffle()
 	for i in 3:
@@ -40,10 +44,13 @@ func _process(delta: float) -> void:
 	for i in entity_manager.entities:
 		var entity := i as EntityManager.Entity
 		var node := entity.node
+		
 		if node is Player:
 			node.animate_screen_position(get_screen_pos(entity.field_pos), delta)
+			
 		if node is Slime:
-			node.global_position = get_screen_pos(entity.field_pos)
+			node.global_position = lerp(node.global_position, get_screen_pos(entity.field_pos), delta * 15)
+			node.set_remaining_time_display($SlimeMoveTimer.time_left / $SlimeMoveTimer.wait_time)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey: if event.is_pressed(): match event.scancode:
@@ -74,6 +81,7 @@ func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime.tscn").instance() as Slime
 	world.add_child(slime)
 	entity_manager.add_at(field_pos, slime)
+	slime.global_position = get_screen_pos(field_pos)
 
 
 func spawn_player(field_pos: Vector2) -> void:

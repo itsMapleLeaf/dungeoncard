@@ -15,3 +15,9 @@ static func points_within_rect(rect: Rect2) -> Array:
 		points.append(rect.position + Vector2(x, y))
 	
 	return points
+
+static func vec_to_nearest_cardinal(vec: Vector2) -> Vector2:
+	if abs(vec.x) > abs(vec.y):
+		return Vector2(sign(vec.x), 0)
+	else:
+		return Vector2(0, sign(vec.y))

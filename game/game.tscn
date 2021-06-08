@@ -14,10 +14,10 @@ __meta__ = {
 }
 
 [node name="PlatformGrid" type="GridContainer" parent="PlatformGridContainer"]
-margin_left = 800.0
-margin_top = 343.0
-margin_right = 800.0
-margin_bottom = 343.0
+margin_left = 960.0
+margin_top = 433.0
+margin_right = 960.0
+margin_bottom = 433.0
 custom_constants/vseparation = 130
 custom_constants/hseparation = 190
 columns = 5
@@ -37,3 +37,9 @@ alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SlimeMoveTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[connection signal="timeout" from="SlimeMoveTimer" to="." method="_on_SlimeMoveTimer_timeout"]

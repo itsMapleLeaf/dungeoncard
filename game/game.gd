@@ -13,6 +13,7 @@ onready var hand := $Hand as HBoxContainer
 
 onready var deck := []
 
+
 func _ready() -> void:
 	randomize()
 	
@@ -52,14 +53,28 @@ func _input(event: InputEvent) -> void:
 		KEY_RIGHT: move_player(Vector2.RIGHT)
 		KEY_SPACE: (player.node as Player).play_attack_animation()
 
+
+# returns the entity that blocked movement, if any
+func try_move_entity(entity: EntityManager.Entity, new_pos: Vector2) -> EntityManager.Entity:
+	var other = entity_manager.get_entity_at_position(new_pos)
+	if other != null: return other
+	
+	entity.field_pos = Vector2(
+		clamp(new_pos.x, 0, field_size.x - 1),
+		clamp(new_pos.y, 0, field_size.y - 1)
+	)
+	return null
+
 func create_platform() -> void:
 	var platform := preload("res://game/platform.tscn").instance() as Control
 	platform_grid.add_child(platform)
+
 
 func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime.tscn").instance() as Slime
 	world.add_child(slime)
 	entity_manager.add_at(field_pos, slime)
+
 
 func spawn_player(field_pos: Vector2) -> void:
 	var player_node := preload("res://game/player.tscn").instance() as Player
@@ -67,18 +82,9 @@ func spawn_player(field_pos: Vector2) -> void:
 	player = entity_manager.add_at(field_pos, player_node)
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
 
-func get_screen_pos(field_pos: Vector2) -> Vector2:
-	return platform_grid.rect_position + field_pos * platform_separation
-
 func move_player(delta: Vector2) -> void:
-	var new_pos := (player.field_pos + delta)
-	if entity_manager.is_occupied(new_pos): return
-	
-	player.field_pos = Vector2(
-		clamp(new_pos.x, 0, field_size.x - 1),
-		clamp(new_pos.y, 0, field_size.y - 1)
-	)
-	
+	try_move_entity(player, player.field_pos + delta)
+
 func try_attack():
 	(player.node as Player).play_attack_animation()
 	for dir in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
@@ -123,3 +129,28 @@ func play_card(card: Card):
 	# put the card back, replacing the position of the one that was played
 	hand.add_child(new_card)
 	hand.move_child(new_card, index)
+
+
+func get_screen_pos(field_pos: Vector2) -> Vector2:
+	return platform_grid.rect_position + field_pos * platform_separation
+
+func _on_SlimeMoveTimer_timeout():
+	var slimes := []
+	
+	for ent in entity_manager.entities:
+		if ent.node is Slime:
+			slimes.append(ent)
+	
+	slimes.sort_custom(self, "sort_by_distance_to_player")
+	
+	for i in slimes:
+		var slime: EntityManager.Entity = i
+		var dir := slime.field_pos.direction_to(player.field_pos)
+		var new_pos := slime.field_pos + Helpers.vec_to_nearest_cardinal(dir)
+		var other := try_move_entity(slime, new_pos)
+		if other == player:
+			pass # TODO: damage player
+
+
+func sort_by_distance_to_player(a: EntityManager.Entity, b: EntityManager.Entity) -> bool:
+	return player.field_pos.distance_to(a.field_pos) < player.field_pos.distance_to(b.field_pos)

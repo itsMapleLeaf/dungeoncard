@@ -16,10 +16,11 @@ onready var deck := []
 func _ready() -> void:
 	randomize()
 	
+	platform_grid.columns = field_size.x
 	platform_grid.add_constant_override("hseparation", platform_separation.x)
 	platform_grid.add_constant_override("vseparation", platform_separation.y)
 	
-	for i in Helpers.points_within_rect(Rect2(Vector2(), field_size)):
+	for i in field_size.x * field_size.y:
 		create_platform()
 	
 	var enemy_spawn_positions := Helpers.points_within_rect(Rect2(Vector2(2, 0), field_size - Vector2(2, 0)))

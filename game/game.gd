@@ -16,9 +16,9 @@ onready var deck := []
 func _ready() -> void:
 	randomize()
 	
-	platform_grid.columns = field_size.x
-	platform_grid.add_constant_override("hseparation", platform_separation.x)
-	platform_grid.add_constant_override("vseparation", platform_separation.y)
+	platform_grid.columns = field_size.x as int
+	platform_grid.add_constant_override("hseparation", platform_separation.x as int)
+	platform_grid.add_constant_override("vseparation", platform_separation.y as int)
 	
 	for i in field_size.x * field_size.y:
 		create_platform()

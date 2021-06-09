@@ -73,19 +73,19 @@ func try_move_entity(entity: EntityManager.Entity, new_pos: Vector2) -> EntityMa
 	return null
 
 func create_platform() -> void:
-	var platform := preload("res://game/platform.tscn").instance() as Control
+	var platform := preload("res://game/platform/platform.tscn").instance() as Control
 	platform_grid.add_child(platform)
 
 
 func spawn_enemy(field_pos: Vector2) -> void:
-	var slime := preload("res://game/slime.tscn").instance() as Slime
+	var slime := preload("res://game/slime/slime.tscn").instance() as Slime
 	world.add_child(slime)
 	entity_manager.add_at(field_pos, slime)
 	slime.global_position = get_screen_pos(field_pos)
 
 
 func spawn_player(field_pos: Vector2) -> void:
-	var player_node := preload("res://game/player.tscn").instance() as Player
+	var player_node := preload("res://game/player/player.tscn").instance() as Player
 	world.add_child(player_node)
 	player = entity_manager.add_at(field_pos, player_node)
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
@@ -103,7 +103,7 @@ func try_attack():
 
 func build_deck():
 	for type in Card.get_card_types():
-		var card := preload("res://game/card.tscn").instance() as Card
+		var card := preload("res://game/card/card.tscn").instance() as Card
 		card.set_type(type)
 		card.connect("clicked", self, "play_card", [card])
 		deck.append(card)

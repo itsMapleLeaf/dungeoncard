@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/card.png-30f156252bc6b6c03c72dd94bfb4c108.stex"
+path="res://.import/player_hand.png-900cef5b8e16a32d2519e10a4fbe455e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/card.png"
-dest_files=[ "res://.import/card.png-30f156252bc6b6c03c72dd94bfb4c108.stex" ]
+source_file="res://game/player/player_hand.png"
+dest_files=[ "res://.import/player_hand.png-900cef5b8e16a32d2519e10a4fbe455e.stex" ]
 
 [params]
 

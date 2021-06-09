@@ -12,52 +12,47 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Arc",
 "language": "GDScript",
-"path": "res://game/arc.gd"
+"path": "res://game/common/arc.gd"
 }, {
 "base": "Control",
 "class": "Card",
 "language": "GDScript",
-"path": "res://game/card.gd"
+"path": "res://game/card/card.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://game/enemy.gd"
+"path": "res://game/enemy/enemy.gd"
 }, {
 "base": "Object",
 "class": "EntityManager",
 "language": "GDScript",
-"path": "res://game/entity_manager.gd"
+"path": "res://game/game/entity_manager.gd"
 }, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://git_api.gdns"
 }, {
-"base": "Reference",
-"class": "Grid",
-"language": "GDScript",
-"path": "res://game/grid.gd"
-}, {
 "base": "Node",
 "class": "Helpers",
 "language": "GDScript",
-"path": "res://game/helpers.gd"
+"path": "res://game/common/helpers.gd"
 }, {
 "base": "Node",
 "class": "HoverAnimation",
 "language": "GDScript",
-"path": "res://game/hover_animation.gd"
+"path": "res://game/player/hover_animation.gd"
 }, {
 "base": "Node2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://game/player.gd"
+"path": "res://game/player/player.gd"
 }, {
 "base": "Node2D",
 "class": "Slime",
 "language": "GDScript",
-"path": "res://game/slime.gd"
+"path": "res://game/slime/slime.gd"
 } ]
 _global_script_class_icons={
 "Arc": "",
@@ -65,7 +60,6 @@ _global_script_class_icons={
 "Enemy": "",
 "EntityManager": "",
 "GitAPI": "",
-"Grid": "",
 "Helpers": "",
 "HoverAnimation": "",
 "Player": "",
@@ -75,7 +69,7 @@ _global_script_class_icons={
 [application]
 
 config/name="dungeoncard"
-run/main_scene="res://game/game.tscn"
+run/main_scene="res://game/game/game.tscn"
 config/icon="res://icon.png"
 
 [display]

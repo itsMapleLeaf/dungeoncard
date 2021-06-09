@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/angleboi.png-5f23272e88513802cc6089eac1ccc1b9.stex"
+path="res://.import/card.png-bb061c646ed23c3151aef05e51dbcda6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/angleboi.png"
-dest_files=[ "res://.import/angleboi.png-5f23272e88513802cc6089eac1ccc1b9.stex" ]
+source_file="res://game/card/card.png"
+dest_files=[ "res://.import/card.png-bb061c646ed23c3151aef05e51dbcda6.stex" ]
 
 [params]
 

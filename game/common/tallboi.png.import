@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/platform.png-134335f81481a5948bcd4808cd2ba092.stex"
+path="res://.import/tallboi.png-a1e660a1b938f0c50528c9492c10d4e1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/platform.png"
-dest_files=[ "res://.import/platform.png-134335f81481a5948bcd4808cd2ba092.stex" ]
+source_file="res://game/common/tallboi.png"
+dest_files=[ "res://.import/tallboi.png-a1e660a1b938f0c50528c9492c10d4e1.stex" ]
 
 [params]
 

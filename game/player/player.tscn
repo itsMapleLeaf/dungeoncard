@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://game/assets/shadow.png" type="Texture" id=1]
-[ext_resource path="res://game/player.gd" type="Script" id=2]
-[ext_resource path="res://game/assets/player_body.png" type="Texture" id=3]
-[ext_resource path="res://game/hover_animation.gd" type="Script" id=4]
-[ext_resource path="res://game/assets/sword.png" type="Texture" id=5]
-[ext_resource path="res://game/assets/player_hand.png" type="Texture" id=6]
+[ext_resource path="res://game/player/player.gd" type="Script" id=1]
+[ext_resource path="res://game/player/hover_animation.gd" type="Script" id=2]
+[ext_resource path="res://game/player/player_hand.png" type="Texture" id=3]
+[ext_resource path="res://game/player/player_body.png" type="Texture" id=4]
+[ext_resource path="res://game/common/shadow.png" type="Texture" id=5]
+[ext_resource path="res://game/common/sword.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "SwordSwing"
@@ -24,13 +24,13 @@ tracks/0/keys = {
 
 [node name="Player" type="Node2D"]
 position = Vector2( 166.312, 224.746 )
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Shadow" type="Sprite" parent="."]
-texture = ExtResource( 1 )
+texture = ExtResource( 5 )
 
 [node name="RightHand" type="Node2D" parent="."]
 position = Vector2( 0, -59 )
@@ -42,35 +42,35 @@ __meta__ = {
 }
 
 [node name="HoverAnimation" type="Node" parent="RightHand/Hand"]
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 
 [node name="sword" type="Sprite" parent="RightHand/Hand"]
 position = Vector2( 20.7664, -76.9548 )
 rotation = 0.254818
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="hand" type="Sprite" parent="RightHand/Hand"]
 position = Vector2( -0.465332, -0.670822 )
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
 
 [node name="LeftHand" type="Node2D" parent="."]
 position = Vector2( 0, -1 )
 
 [node name="Sprite" type="Sprite" parent="LeftHand"]
 position = Vector2( -43, -29 )
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
 
 [node name="HoverAnimation2" type="Node" parent="LeftHand/Sprite"]
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Body"]
 position = Vector2( 0, -59 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="HoverAnimation" type="Node" parent="Body/Sprite"]
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 time_offset = 0.216
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

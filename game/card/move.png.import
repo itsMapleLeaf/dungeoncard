@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shadow.png-113d278b553749b062bbe18e426eda2e.stex"
+path="res://.import/move.png-6de341e66421d54ff368ef71f8238c1d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/shadow.png"
-dest_files=[ "res://.import/shadow.png-113d278b553749b062bbe18e426eda2e.stex" ]
+source_file="res://game/card/move.png"
+dest_files=[ "res://.import/move.png-6de341e66421d54ff368ef71f8238c1d.stex" ]
 
 [params]
 

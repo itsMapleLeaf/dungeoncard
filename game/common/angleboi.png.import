@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/move.png-365853167b118bb39657c3ab094a3b7f.stex"
+path="res://.import/angleboi.png-f3fca63ec25bb11c42b6710eb1976f30.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/move.png"
-dest_files=[ "res://.import/move.png-365853167b118bb39657c3ab094a3b7f.stex" ]
+source_file="res://game/common/angleboi.png"
+dest_files=[ "res://.import/angleboi.png-f3fca63ec25bb11c42b6710eb1976f30.stex" ]
 
 [params]
 

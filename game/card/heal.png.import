@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tallboi.png-242f20dea2a8638cd4fdeb3c0412ab39.stex"
+path="res://.import/heal.png-3cb0b634de8d958a15ea4c69b89f0e22.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/tallboi.png"
-dest_files=[ "res://.import/tallboi.png-242f20dea2a8638cd4fdeb3c0412ab39.stex" ]
+source_file="res://game/card/heal.png"
+dest_files=[ "res://.import/heal.png-3cb0b634de8d958a15ea4c69b89f0e22.stex" ]
 
 [params]
 

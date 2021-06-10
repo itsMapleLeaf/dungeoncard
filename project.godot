@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "EntityManager",
 "language": "GDScript",
-"path": "res://game/game/entity_manager.gd"
+"path": "res://game/level/entity_manager.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -43,6 +43,11 @@ _global_script_classes=[ {
 "class": "HoverAnimation",
 "language": "GDScript",
 "path": "res://game/player/hover_animation.gd"
+}, {
+"base": "Node",
+"class": "Level",
+"language": "GDScript",
+"path": "res://game/level/level.gd"
 }, {
 "base": "Node2D",
 "class": "Player",
@@ -62,6 +67,7 @@ _global_script_class_icons={
 "GitAPI": "",
 "Helpers": "",
 "HoverAnimation": "",
+"Level": "",
 "Player": "",
 "Slime": ""
 }
@@ -69,7 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="dungeoncard"
-run/main_scene="res://game/game/game.tscn"
+run/main_scene="res://game/game.tscn"
 config/icon="res://icon.png"
 
 [display]

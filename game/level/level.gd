@@ -1,18 +1,23 @@
 extends Node
+class_name Level
+
+signal complete
 
 const field_size := Vector2(5, 5)
+const field_rect := Rect2(Vector2.ZERO, field_size)
 const platform_separation := Vector2(190, 130)
 	
 var entity_manager := EntityManager.new()
 
 var player: EntityManager.Entity
 
+var gem: EntityManager.Entity
+
 onready var platform_grid := $PlatformGridContainer/PlatformGrid as GridContainer
 onready var world := $World as Node2D
 onready var hand := $Hand as HBoxContainer
 
 onready var deck := []
-
 
 func _ready() -> void:
 	randomize()
@@ -27,7 +32,9 @@ func _ready() -> void:
 	# other starting positions depend on the grid being the correct size/position,
 	# so we'll wait until it's sorted that layout stuff out before continuing
 	yield(platform_grid, "sort_children")
-	
+
+	# all board positions except the spaces on the left
+	# so the player doesn't spawn right next to an enemy
 	var enemy_spawn_positions := Helpers.points_within_rect(Rect2(Vector2(2, 0), field_size - Vector2(2, 0)))
 	enemy_spawn_positions.shuffle()
 	for i in 3:
@@ -41,6 +48,7 @@ func _ready() -> void:
 		hand.add_child(draw_card())
 
 func _process(delta: float) -> void:
+	print(entity_manager.entities.size())
 	for i in entity_manager.entities:
 		var entity := i as EntityManager.Entity
 		var node := entity.node
@@ -48,9 +56,12 @@ func _process(delta: float) -> void:
 		if node is Player:
 			node.animate_screen_position(get_screen_pos(entity.field_pos), delta)
 			
-		if node is Slime:
+		elif node is Slime:
 			node.global_position = lerp(node.global_position, get_screen_pos(entity.field_pos), delta * 15)
 			node.set_remaining_time_display($SlimeMoveTimer.time_left / $SlimeMoveTimer.wait_time)
+			
+		else:
+			node.global_position = lerp(node.global_position, get_screen_pos(entity.field_pos), delta * 15)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey: if event.is_pressed(): match event.scancode:
@@ -60,6 +71,11 @@ func _input(event: InputEvent) -> void:
 		KEY_RIGHT: move_player(Vector2.RIGHT)
 		KEY_SPACE: (player.node as Player).play_attack_animation()
 
+func is_free_space(pos: Vector2) -> bool:
+	var other = entity_manager.get_entity_at_position(pos)
+	return other == null \
+		and pos.x >= field_size.x and pos.x < field_size.x \
+		and pos.y >= field_size.y and pos.y < field_size.y
 
 # returns the entity that blocked movement, if any
 func try_move_entity(entity: EntityManager.Entity, new_pos: Vector2) -> EntityManager.Entity:
@@ -83,6 +99,12 @@ func spawn_enemy(field_pos: Vector2) -> void:
 	entity_manager.add_at(field_pos, slime)
 	slime.global_position = get_screen_pos(field_pos)
 
+func get_enemy_count() -> int:
+	var enemy_count := 0
+	for entity in entity_manager.entities:
+		if entity.node is Slime:
+			enemy_count += 1
+	return enemy_count
 
 func spawn_player(field_pos: Vector2) -> void:
 	var player_node := preload("res://game/player/player.tscn").instance() as Player
@@ -91,17 +113,26 @@ func spawn_player(field_pos: Vector2) -> void:
 	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
 
 func move_player(delta: Vector2) -> void:
-	try_move_entity(player, player.field_pos + delta)
+	var blocker := try_move_entity(player, player.field_pos + delta)
+	if blocker and blocker == gem:
+		emit_signal("complete")
 
-func try_attack():
+func try_attack() -> bool:
 	(player.node as Player).play_attack_animation()
 	for dir in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
 		var ent := entity_manager.get_entity_at_position(player.field_pos + dir)
 		if ent != null and ent.node is Slime:
 			entity_manager.remove(ent)
-			break
+			return true
+			
+	return false
 
 func build_deck():
+	for card in deck:
+		card.queue_free()
+	
+	deck = []
+	
 	for type in Card.get_card_types():
 		var card := preload("res://game/card/card.tscn").instance() as Card
 		card.set_type(type)
@@ -115,6 +146,17 @@ func draw_card() -> Card:
 	return card
 	
 func play_card(card: Card):
+	var new_card := draw_card()
+
+	var index := hand.get_children().find(card)
+
+	hand.remove_child(card)
+	deck.append(card)
+	
+	# put the card back, replacing the position of the one that was played
+	hand.add_child(new_card)
+	hand.move_child(new_card, index)
+	
 	match card.type:
 		Card.CardType.MOVE_LEFT:
 			move_player(Vector2.LEFT)
@@ -126,18 +168,15 @@ func play_card(card: Card):
 			move_player(Vector2.DOWN)
 		Card.CardType.ATTACK:
 			try_attack()
+			if get_enemy_count() == 0:
+				emit_signal("complete")
 
-	var new_card := draw_card()
 
-	var index := hand.get_children().find(card)
-
-	hand.remove_child(card)
-	deck.append(card)
-	
-	# put the card back, replacing the position of the one that was played
-	hand.add_child(new_card)
-	hand.move_child(new_card, index)
-
+func spawn_gem(field_pos: Vector2) -> void:
+	var gem_node := preload("res://game/gem/gem.tscn").instance() as Node2D
+	world.add_child(gem_node)
+	gem_node.global_position = get_screen_pos(field_pos)
+	gem = entity_manager.add_at(field_pos, gem_node)
 
 func get_screen_pos(field_pos: Vector2) -> Vector2:
 	return platform_grid.rect_position + field_pos * platform_separation

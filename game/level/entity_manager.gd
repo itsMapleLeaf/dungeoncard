@@ -21,6 +21,10 @@ func get_entity_at_position(field_pos: Vector2) -> Entity:
 	
 func is_occupied(field_pos: Vector2) -> bool:
 	return get_entity_at_position(field_pos) != null
+	
+func clear() -> void:
+	for entity in entities:
+		remove(entity)
 
 class Entity:
 	var field_pos: Vector2

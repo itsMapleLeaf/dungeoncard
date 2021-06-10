@@ -48,7 +48,6 @@ func _ready() -> void:
 		hand.add_child(draw_card())
 
 func _process(delta: float) -> void:
-	print(entity_manager.entities.size())
 	for i in entity_manager.entities:
 		var entity := i as EntityManager.Entity
 		var node := entity.node

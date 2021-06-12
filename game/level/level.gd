@@ -5,16 +5,13 @@ signal complete
 
 const field_size := Vector2(5, 5)
 const field_rect := Rect2(Vector2.ZERO, field_size)
+
 const platform_separation := Vector2(190, 130)
-	
-var entity_manager := EntityManager.new()
 
-var player: EntityManager.Entity
-
-var gem: EntityManager.Entity
+var player: Entity
 
 onready var platform_grid := $PlatformGridContainer/PlatformGrid as GridContainer
-onready var world := $World as Node2D
+onready var field := $EntityField as Node
 onready var hand := $Hand as HBoxContainer
 
 onready var deck := []
@@ -48,19 +45,11 @@ func _ready() -> void:
 		hand.add_child(draw_card())
 
 func _process(delta: float) -> void:
-	for i in entity_manager.entities:
-		var entity := i as EntityManager.Entity
-		var node := entity.node
-		
-		if node is Player:
-			node.animate_screen_position(get_screen_pos(entity.field_pos), delta)
-			
-		elif node is Slime:
-			node.global_position = lerp(node.global_position, get_screen_pos(entity.field_pos), delta * 15)
+	for node in field.get_children():
+		if node is Entity:
+			node.global_position = lerp(node.global_position, get_screen_pos(node.field_pos), delta * 15)
+		if node is Slime:
 			node.set_remaining_time_display($SlimeMoveTimer.time_left / $SlimeMoveTimer.wait_time)
-			
-		else:
-			node.global_position = lerp(node.global_position, get_screen_pos(entity.field_pos), delta * 15)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey: if event.is_pressed(): match event.scancode:
@@ -71,14 +60,24 @@ func _input(event: InputEvent) -> void:
 		KEY_SPACE: (player.node as Player).play_attack_animation()
 
 func is_free_space(pos: Vector2) -> bool:
-	var other = entity_manager.get_entity_at_position(pos)
+	var other = get_entity_at_position(pos)
 	return other == null \
 		and pos.x >= field_size.x and pos.x < field_size.x \
 		and pos.y >= field_size.y and pos.y < field_size.y
 
+func get_entity_at_position(field_pos: Vector2) -> Entity:
+	for e in field.get_children():
+		if e is Entity and field_pos.is_equal_approx(e.field_pos):
+			return e
+			
+	return null
+	
+func is_occupied(field_pos: Vector2) -> bool:
+	return get_entity_at_position(field_pos) != null
+
 # returns the entity that blocked movement, if any
-func try_move_entity(entity: EntityManager.Entity, new_pos: Vector2) -> EntityManager.Entity:
-	var other = entity_manager.get_entity_at_position(new_pos)
+func try_move_entity(entity: Entity, new_pos: Vector2) -> Entity:
+	var other = get_entity_at_position(new_pos)
 	if other != null: return other
 	
 	entity.field_pos = Vector2(
@@ -91,37 +90,34 @@ func create_platform() -> void:
 	var platform := preload("res://game/platform/platform.tscn").instance() as Control
 	platform_grid.add_child(platform)
 
-
 func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime/slime.tscn").instance() as Slime
-	world.add_child(slime)
-	entity_manager.add_at(field_pos, slime)
+	field.add_child(slime)
+	slime.field_pos = field_pos
 	slime.global_position = get_screen_pos(field_pos)
 
 func get_enemy_count() -> int:
 	var enemy_count := 0
-	for entity in entity_manager.entities:
-		if entity.node is Slime:
+	for entity in field.get_children():
+		if entity is Slime:
 			enemy_count += 1
 	return enemy_count
 
 func spawn_player(field_pos: Vector2) -> void:
-	var player_node := preload("res://game/player/player.tscn").instance() as Player
-	world.add_child(player_node)
-	player = entity_manager.add_at(field_pos, player_node)
-	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
+	player = preload("res://game/player/player.tscn").instance() as Player
+	field.add_child(player)
+	player.field_pos = field_pos
+#	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
 
 func move_player(delta: Vector2) -> void:
-	var blocker := try_move_entity(player, player.field_pos + delta)
-	if blocker and blocker == gem:
-		emit_signal("complete")
+	try_move_entity(player, player.field_pos + delta)
 
 func try_attack() -> bool:
-	(player.node as Player).play_attack_animation()
+	player.play_attack_animation()
 	for dir in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
-		var ent := entity_manager.get_entity_at_position(player.field_pos + dir)
-		if ent != null and ent.node is Slime:
-			entity_manager.remove(ent)
+		var ent := get_entity_at_position(player.field_pos + dir)
+		if ent != null and ent is Slime:
+			ent.queue_free()
 			return true
 			
 	return false
@@ -167,15 +163,9 @@ func play_card(card: Card):
 			move_player(Vector2.DOWN)
 		Card.CardType.ATTACK:
 			try_attack()
+			yield(get_tree(), "idle_frame")
 			if get_enemy_count() == 0:
 				emit_signal("complete")
-
-
-func spawn_gem(field_pos: Vector2) -> void:
-	var gem_node := preload("res://game/gem/gem.tscn").instance() as Node2D
-	world.add_child(gem_node)
-	gem_node.global_position = get_screen_pos(field_pos)
-	gem = entity_manager.add_at(field_pos, gem_node)
 
 func get_screen_pos(field_pos: Vector2) -> Vector2:
 	return platform_grid.rect_position + field_pos * platform_separation
@@ -183,14 +173,14 @@ func get_screen_pos(field_pos: Vector2) -> Vector2:
 func _on_SlimeMoveTimer_timeout():
 	var slimes := []
 	
-	for ent in entity_manager.entities:
-		if ent.node is Slime:
+	for ent in field.get_children():
+		if ent is Slime:
 			slimes.append(ent)
 	
 	slimes.sort_custom(self, "sort_by_distance_to_player")
 	
 	for i in slimes:
-		var slime: EntityManager.Entity = i
+		var slime: Entity = i
 		var dir := slime.field_pos.direction_to(player.field_pos)
 		var new_pos := slime.field_pos + Helpers.vec_to_nearest_cardinal(dir)
 		var other := try_move_entity(slime, new_pos)
@@ -198,5 +188,5 @@ func _on_SlimeMoveTimer_timeout():
 			pass # TODO: damage player
 
 
-func sort_by_distance_to_player(a: EntityManager.Entity, b: EntityManager.Entity) -> bool:
+func sort_by_distance_to_player(a: Entity, b: Entity) -> bool:
 	return player.field_pos.distance_to(a.field_pos) < player.field_pos.distance_to(b.field_pos)

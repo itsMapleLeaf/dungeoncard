@@ -24,10 +24,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/enemy/enemy.gd"
 }, {
-"base": "Object",
-"class": "EntityManager",
+"base": "Node2D",
+"class": "Entity",
 "language": "GDScript",
-"path": "res://game/level/entity_manager.gd"
+"path": "res://game/entity/entity.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -49,12 +49,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/level/level.gd"
 }, {
-"base": "Node2D",
+"base": "Entity",
 "class": "Player",
 "language": "GDScript",
 "path": "res://game/player/player.gd"
 }, {
-"base": "Node2D",
+"base": "Entity",
 "class": "Slime",
 "language": "GDScript",
 "path": "res://game/slime/slime.gd"
@@ -63,7 +63,7 @@ _global_script_class_icons={
 "Arc": "",
 "Card": "",
 "Enemy": "",
-"EntityManager": "",
+"Entity": "",
 "GitAPI": "",
 "Helpers": "",
 "HoverAnimation": "",

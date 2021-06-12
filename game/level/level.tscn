@@ -25,6 +25,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="EntityField" type="Node" parent="."]
+
 [node name="World" type="Node2D" parent="."]
 
 [node name="Hand" type="HBoxContainer" parent="."]

@@ -46,10 +46,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	for node in field.get_children():
-		if node is Entity:
-			node.global_position = lerp(node.global_position, get_screen_pos(node.field_pos), delta * 15)
-		if node is Slime:
-			node.set_remaining_time_display($SlimeMoveTimer.time_left / $SlimeMoveTimer.wait_time)
+		(node as Entity).update_screen_position(get_screen_pos(node.field_pos), delta)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey: if event.is_pressed(): match event.scancode:
@@ -93,8 +90,9 @@ func create_platform() -> void:
 func spawn_enemy(field_pos: Vector2) -> void:
 	var slime := preload("res://game/slime/slime.tscn").instance() as Slime
 	field.add_child(slime)
+	slime.move_timer = $SlimeMoveTimer as Timer
 	slime.field_pos = field_pos
-	slime.global_position = get_screen_pos(field_pos)
+	slime.update_screen_position(get_screen_pos(field_pos), 1)
 
 func get_enemy_count() -> int:
 	var enemy_count := 0
@@ -107,7 +105,7 @@ func spawn_player(field_pos: Vector2) -> void:
 	player = preload("res://game/player/player.tscn").instance() as Player
 	field.add_child(player)
 	player.field_pos = field_pos
-#	player_node.animate_screen_position(get_screen_pos(field_pos), 1)
+	player.update_screen_position(get_screen_pos(field_pos), 1)
 
 func move_player(delta: Vector2) -> void:
 	try_move_entity(player, player.field_pos + delta)
